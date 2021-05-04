@@ -1,0 +1,173 @@
+<html>
+<head>
+<style>
+    .heading {
+        text-decoration: underline;
+	    font-size: 26px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    div {
+        font-size: 24px;
+        font-family: 'Lucida Sans' , '微軟正黑體';
+        padding-bottom: 0;
+        padding-top: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+    }
+	
+	.centreblock {
+		position: absolute;
+		left: 250px;
+	}
+
+	.leftblock {
+		position: absolute;
+		left: 5px;
+		border-style: solid;
+	}
+	
+	.container {
+		position: absolute;
+		top: 5px;
+		width: 2000px;
+        padding-bottom: 0;
+        padding-top: 0;
+	}
+
+    .dest {
+	    font-size: 16px;
+    }
+
+	table {
+		width: 100%;
+	}
+
+	button {
+		top: 5px;
+	}
+	
+
+</style>
+<body onload="testfn('LHP');testfn('NOP');testfn('TKO')">
+	<div class="container">
+		<div class="leftblock">
+			<div id="fromLOHAS">
+	    		<p class="heading">康城站</p>
+    			<p id="nexttraintime">Test</p>
+			</div>
+		</div>
+		<div class="centreblock">
+			<table>
+			    <tr>
+			        <th><div class="heading">北角站</th>
+			        <th></th>
+			        <th></th>
+			        <th><div class="heading">將軍澳站</th>
+			</tr>
+			    <tr>
+			        <td><div id="fromNP">time from NP</div></td>
+			        <td> -> </td>
+			        <td><div id="toNP">time from NP</div></td>
+			        <td><div id="fromTKO">time from TKO</div></td>
+			    </tr>
+			</table>
+		</div>
+	</div>
+
+    <script language="JavaScript">
+        
+		function testfn(sta){
+            
+	        var i;
+	        var d;
+	        var s = "";
+	        var s1 = "";
+            var deststring;
+            var dest;
+            var m, m1, d1;
+	        var objvar;
+	        let request = new XMLHttpRequest();
+            
+            request.open('GET', ('https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TKL&sta=' + sta));
+            request.responseType = 'json';
+            request.onload = function() {
+                const rawdata = request.response;
+
+	            if (sta == 'LHP') {
+			        objvar = rawdata['data']['TKL-LHP']['DOWN'];
+		        } else if (sta == 'NOP') {
+			        objvar = rawdata['data']['TKL-NOP']['UP'];
+		        } else if (sta == 'TKO') {
+			        objvar = rawdata['data']['TKL-TKO']['UP'];
+		        }
+
+
+                for (i = 0; i < (objvar.length); i++){
+			        d = new Date(objvar[i]['time'])
+                    dest = objvar[i]['dest']
+                    switch (dest) {
+                        case 'NOP':
+                            deststring = '北角';
+                            break;
+                        case 'QUB':
+                            deststring = '鰂魚涌';
+                            break;
+                        case 'YAT':
+                            deststring = '油塘';
+                            break;
+                        case 'TIK':
+                            deststring = '調景嶺';
+                            break;
+                        case 'TKO':
+                            deststring = '將軍澳';
+                            break;
+                        case 'LHP':
+                            deststring = '康城';
+                            break;
+                        case 'HAH':
+                            deststring = '坑口';
+                            break;
+                        case 'POA':
+                            deststring = '寶琳';
+                    }
+                    m = d.getMinutes();
+		            m1 = m + 12;
+			
+                    if (m < 10) {
+                        m = '0' + m;
+                    }
+
+			        if (m1 < 10) {
+                        m1 = '0' + m1;
+                    }
+			        
+                    if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
+		                s = s + '<tr><td><div class="time">' + d.getHours() + ':' + m + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
+			            s1 = s1 + '<tr><td><div class="time">' + d.getHours() + ':' + m1 + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
+			        }
+                    
+                }
+		        
+                s = '<table>' + s + '</table>';
+		        s1 = '<table>' + s1 + '</table>';
+		        if (sta == 'LHP') {	    
+			        document.getElementById('nexttraintime').innerHTML = s;
+		        } else if (sta == 'NOP') {
+			        document.getElementById('fromNP').innerHTML = s;
+			        document.getElementById('toNP').innerHTML = s1;
+		        } else if (sta == 'TKO') {
+			        document.getElementById('fromTKO').innerHTML = s;
+		        };
+			
+            };
+	        request.send();
+
+        };
+
+    </script>
+	<button id="button" onclick="document.getElementById('fromLOHAS').style.display='none'">Test</button>
+</body>
+</head>
+</html>
