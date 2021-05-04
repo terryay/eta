@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta name="viewport" content="width=800, initial-scale=1">
 </head>
 <style>
     * {
@@ -34,7 +35,14 @@
         width: 33%;
         float: left;
 	}
-	
+
+	.header {
+		left: 5px;
+		border-style: solid;
+        overflow: auto;
+        width: 100%;
+        float: left;
+	}
 
     .dest {
 	    font-size: 0.8em;
@@ -48,7 +56,7 @@
 	
     body {
         word-break: keep-all;
-        width: 340px;
+        width: 800px;
         overflow: auto;
         font-size: 100%;
     }
@@ -56,6 +64,9 @@
 
 </style>
 <body onload="testfn('LHP');testfn('NOP');testfn('TKO')">
+    <div class="header">
+        abc
+    </div>
     <div class="leftblock">
         <div id="fromLOHAS">
             <div class="heading">康城站</div>
