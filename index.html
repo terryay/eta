@@ -1,6 +1,5 @@
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
     * {
@@ -8,14 +7,14 @@
     }
     .heading {
         text-decoration: underline;
-	    font-size: 2vw;
+	    font-size: 1.2em;
         margin-bottom: 0;
         margin-top: 0;
     }
 
     div {
-        font-size: 2vw;
-        font-family: 'Lucida Sans' , '微軟正黑體';
+        font-size: 1em;
+        font-family: 'Verdana' , '微軟正黑體';
         padding-bottom: 0;
         padding-top: 0;
 		margin-bottom: 0;
@@ -23,7 +22,7 @@
     }
 	
 	.centreblock {
-        width: 33%
+        width: 67%;
         overflow: auto;
         float: left;
 	}
@@ -31,14 +30,14 @@
 	.leftblock {
 		left: 5px;
 		border-style: solid;
-        overflow: hidden;
+        overflow: auto;
         width: 33%;
         float: left;
 	}
 	
 
     .dest {
-	    font-size: 1.25vw;
+	    font-size: 0.8em;
     }
 
 
@@ -49,7 +48,9 @@
 	
     body {
         word-break: keep-all;
-        width: 500px;
+        width: 340px;
+        overflow: auto;
+        font-size: 100%;
     }
 
 
@@ -65,15 +66,11 @@
         <table>
             <tr>
                 <th><div class="heading">北角站</div></th>
-                <th></th>
-                <th></th>
                 <th><div class="heading">將軍澳站</div></th>
             </tr>
             <tr>
                 <td><div id="fromNP">time from NP</div></td>
-                <td> -> </td>
-                <td><div id="toNP">time from NP</div></td>
-                <td><div id="fromTKO">time from TKO</div></td>
+                <td style="vertical-align: top"><div id="fromTKO">time from TKO</div></td>
             </tr>
         </table>
     </div>
@@ -91,6 +88,7 @@
             var m, m1, d1;
 	        var objvar;
 	        let request = new XMLHttpRequest();
+            var timestr;
             
             request.open('GET', ('https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TKL&sta=' + sta));
             request.responseType = 'json';
@@ -107,7 +105,8 @@
 
 
                 for (i = 0; i < (objvar.length); i++){
-			        d = new Date(objvar[i]['time'])
+                    timestr = objvar[i]['time']
+                    timestr = timestr.substr(11,5)
                     dest = objvar[i]['dest']
                     switch (dest) {
                         case 'NOP':
@@ -134,31 +133,19 @@
                         case 'POA':
                             deststring = '寶琳';
                     }
-                    m = d.getMinutes();
-		            m1 = m + 12;
-			
-                    if (m < 10) {
-                        m = '0' + m;
+		        		        
+                    if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
+		                s = s + '<tr><td style="vertical-align: top"><div class="time">' + timestr + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
                     }
 
-			        if (m1 < 10) {
-                        m1 = '0' + m1;
-                    }
-			        
-                    if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
-		                s = s + '<tr><td><div class="time">' + d.getHours() + ':' + m + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
-			            s1 = s1 + '<tr><td><div class="time">' + d.getHours() + ':' + m1 + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
-			        }
                     
                 }
 		        
                 s = '<table>' + s + '</table>';
-		        s1 = '<table>' + s1 + '</table>';
 		        if (sta == 'LHP') {	    
 			        document.getElementById('nexttraintime').innerHTML = s;
 		        } else if (sta == 'NOP') {
 			        document.getElementById('fromNP').innerHTML = s;
-			        document.getElementById('toNP').innerHTML = s1;
 		        } else if (sta == 'TKO') {
 			        document.getElementById('fromTKO').innerHTML = s;
 		        };
@@ -169,7 +156,7 @@
         };
 
     </script>
-	<button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button>
+	<p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
     <p>width = <div id="wwww"></div></p>
 </body>
 </head>
