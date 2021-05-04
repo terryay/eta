@@ -3,13 +3,13 @@
 <style>
     .heading {
         text-decoration: underline;
-	    font-size: 26px;
+	    font-size: 1em;
         margin-bottom: 0;
         margin-top: 0;
     }
 
     div {
-        font-size: 24px;
+        font-size: 1.5em;
         font-family: 'Lucida Sans' , '微軟正黑體';
         padding-bottom: 0;
         padding-top: 0;
@@ -37,7 +37,7 @@
 	}
 
     .dest {
-	    font-size: 16px;
+	    font-size: 1em;
     }
 
 	table {
@@ -48,24 +48,27 @@
 		top: 5px;
 	}
 	
+    body {
+        font-size: 100%;
+    }
 
 </style>
 <body onload="testfn('LHP');testfn('NOP');testfn('TKO')">
 	<div class="container">
 		<div class="leftblock">
 			<div id="fromLOHAS">
-	    		<p class="heading">康城站</p>
-    			<p id="nexttraintime">Test</p>
+	    		<div class="heading">康城站</div>
+    			<div id="nexttraintime">Test</div>
 			</div>
 		</div>
 		<div class="centreblock">
 			<table>
 			    <tr>
-			        <th><div class="heading">北角站</th>
+			        <th><div class="heading">北角站</div></th>
 			        <th></th>
 			        <th></th>
-			        <th><div class="heading">將軍澳站</th>
-			</tr>
+			        <th><div class="heading">將軍澳站</div></th>
+			    </tr>
 			    <tr>
 			        <td><div id="fromNP">time from NP</div></td>
 			        <td> -> </td>
