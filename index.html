@@ -62,7 +62,7 @@
 
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO')">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getBusData()">
     <div class="header" id="warning-message">
         abc
     </div>
@@ -85,6 +85,16 @@
             <tr>
                 <td><div id="fromNP">time from NP</div></td>
                 <td style="vertical-align: top"><div id="fromTKO">time from TKO</div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock" id="busatTKOtunnel" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><div class="heading">將隧往康城</div></td>
+            </tr>
+            <tr>
+                <td><div id="busatTKOtunneltime">Test</div></td>
             </tr>
         </table>
     </div>
@@ -178,6 +188,81 @@
 	        request.send();
 
         };
+
+        function getBusData(){
+            var alltime = [];
+            var timestr;
+            var objvar;
+            var i;
+            var outputstr = "";
+            let request = new XMLHttpRequest();
+            let request1 = new XMLHttpRequest()
+            var timeobj;
+            
+            // request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
+            request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
+            request.responseType = 'json';
+            request.onload = function() {    
+                const rawdata = request.response;
+
+                objvar = rawdata['data']
+                for (i = 0; i < (objvar.length); i++){
+                    timestr = objvar[i]['eta'];
+                    timeobj = new Date(timestr);
+                    alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                }
+                
+                if ((request.readyState == 4) && (request1.readyState == 4)) {
+                    alltime.sort(function(a,b){return a.time - b.time});
+
+                    for (i = 0; i < alltime.length; i++){
+                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="time">' + alltime[i].route + '</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + '   ' + '</div></td><td><div class="dest">' + alltime[i].dest + '</div></td></tr>';
+                    }
+
+                
+                    outputstr = '<table>' + outputstr + '</table>';
+                    document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                }
+
+                
+                
+            };
+            request.send();
+
+            request1 = new XMLHttpRequest();
+            request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/003595/797'));
+            // request1.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
+            request1.responseType = 'json';
+            request1.onload = function() {    
+                const rawdata = request1.response;
+
+                objvar = rawdata['data']
+                for (i = 0; i < (objvar.length); i++){
+                    timestr = objvar[i]['eta'];
+                    timeobj = new Date(timestr);
+                    alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                }
+                
+
+                
+
+                
+
+                if ((request.readyState == 4) && (request1.readyState == 4)) {
+                    alltime.sort(function(a,b){return a.time - b.time});
+                    for (i = 0; i < alltime.length; i++){
+                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="time">' + alltime[i].route + '</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + '   ' + '</div></td><td><div class="dest">' + alltime[i].dest + '</div></td></tr>';
+                    }
+
+                    
+                    outputstr = '<table>' + outputstr + '</table>';
+                    document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                }
+
+                
+            };
+            request1.send();
+        }
 
     </script>
 	<div class="header">
