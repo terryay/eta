@@ -8,14 +8,14 @@
     }
     .heading {
         text-decoration: underline;
-	    font-size: 1.2em;
+	    font-size: 1.3em;
         margin-bottom: 0;
         margin-top: 0;
     }
 
     div {
-        font-size: 1em;
-        font-family: 'Verdana' , '微軟正黑體';
+        font-size: 1.3em;
+        font-family: 'Arial' , '微軟正黑體';
         padding-bottom: 0;
         padding-top: 0;
 		margin-bottom: 0;
@@ -23,16 +23,15 @@
     }
 	
 	.centreblock {
-        width: 67%;
+        width: 65%;
         overflow: auto;
         float: left;
 	}
 
 	.leftblock {
 		left: 5px;
-		border-style: solid;
         overflow: auto;
-        width: 33%;
+        width: 35%;
         float: left;
 	}
 
@@ -45,7 +44,7 @@
 	}
 
     .dest {
-	    font-size: 0.8em;
+	    font-size: 0.9em;
     }
 
 
@@ -56,28 +55,32 @@
 	
     body {
         word-break: keep-all;
-        width: 320px;
+        width: 360px;
         overflow: auto;
         font-size: 100%;
     }
 
 
 </style>
-<body onload="testfn('LHP');testfn('NOP');testfn('TKO')">
-    <div class="header">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO')">
+    <div class="header" id="warning-message">
         abc
     </div>
-    <div class="leftblock">
-        <div id="fromLOHAS">
-            <div class="heading">康城站</div>
-            <div id="nexttraintime">Test</div>
-        </div>
-    </div>
-    <div class="centreblock">
+    <div class="leftblock" id="trainfromLOHAS">
         <table>
             <tr>
-                <th><div class="heading">北角站</div></th>
-                <th><div class="heading">將軍澳站</div></th>
+                <td><div class="heading">康城站</div></td>
+            </tr>
+            <tr>
+                <td><div id="nexttraintime">Test</div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="centreblock" id="traintoLOHAS">
+        <table style="min-width: 100%;">
+            <tr>
+                <td style="min-width:50%"><div class="heading">北角站</div></td>
+                <td style="min-width:50%"><div class="heading">將軍澳站</div></td>
             </tr>
             <tr>
                 <td><div id="fromNP">time from NP</div></td>
@@ -88,7 +91,7 @@
 
     <script language="JavaScript">
         
-		function testfn(sta){
+		function getMTRData(sta){
             
 	        var i;
 	        var d;
@@ -106,60 +109,70 @@
             request.onload = function() {
                 const rawdata = request.response;
 
-	            if (sta == 'LHP') {
-			        objvar = rawdata['data']['TKL-LHP']['DOWN'];
-		        } else if (sta == 'NOP') {
-			        objvar = rawdata['data']['TKL-NOP']['UP'];
-		        } else if (sta == 'TKO') {
-			        objvar = rawdata['data']['TKL-TKO']['UP'];
-		        }
-
-
-                for (i = 0; i < (objvar.length); i++){
-                    timestr = objvar[i]['time']
-                    timestr = timestr.substr(11,5)
-                    dest = objvar[i]['dest']
-                    switch (dest) {
-                        case 'NOP':
-                            deststring = '北角';
-                            break;
-                        case 'QUB':
-                            deststring = '鰂魚涌';
-                            break;
-                        case 'YAT':
-                            deststring = '油塘';
-                            break;
-                        case 'TIK':
-                            deststring = '調景嶺';
-                            break;
-                        case 'TKO':
-                            deststring = '將軍澳';
-                            break;
-                        case 'LHP':
-                            deststring = '康城';
-                            break;
-                        case 'HAH':
-                            deststring = '坑口';
-                            break;
-                        case 'POA':
-                            deststring = '寶琳';
-                    }
-		        		        
-                    if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
-		                s = s + '<tr><td style="vertical-align: top"><div class="time">' + timestr + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
+                if (rawdata['status'] == 1){
+                    if (sta == 'LHP') {
+                        objvar = rawdata['data']['TKL-LHP']['DOWN'];
+                    } else if (sta == 'NOP') {
+                        objvar = rawdata['data']['TKL-NOP']['UP'];
+                    } else if (sta == 'TKO') {
+                        objvar = rawdata['data']['TKL-TKO']['UP'];
                     }
 
+
+                    for (i = 0; i < (objvar.length); i++){
+                        timestr = objvar[i]['time']
+                        timestr = timestr.substr(11,5)
+                        dest = objvar[i]['dest']
+                        switch (dest) {
+                            case 'NOP':
+                                deststring = '北角';
+                                break;
+                            case 'QUB':
+                                deststring = '鰂魚涌';
+                                break;
+                            case 'YAT':
+                                deststring = '油塘';
+                                break;
+                            case 'TIK':
+                                deststring = '調景嶺';
+                                break;
+                            case 'TKO':
+                                deststring = '將軍澳';
+                                break;
+                            case 'LHP':
+                                deststring = '康城';
+                                break;
+                            case 'HAH':
+                                deststring = '坑口';
+                                break;
+                            case 'POA':
+                                deststring = '寶琳';
+                        }
+                                    
+                        if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
+                            s = s + '<tr><td style="vertical-align: top"><div class="time">' + timestr + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
+                        }
+
+                        
+                    }
                     
+                    s = '<table>' + s + '</table>';
+                    if (sta == 'LHP') {	    
+                        document.getElementById('nexttraintime').innerHTML = s;
+                    } else if (sta == 'NOP') {
+                        document.getElementById('fromNP').innerHTML = s;
+                    } else if (sta == 'TKO') {
+                        document.getElementById('fromTKO').innerHTML = s;
+                    };
+                    document.getElementById('warning-message').style.display='none';
+                    document.getElementById('traintoLOHAS').style.display='block';
+                    document.getElementById('trainfromLOHAS').style.display='block';
+                } else {
+                    document.getElementById('warning-message').innerText = rawdata['message'];
+                    document.getElementById('warning-message').style.display='block';
+                    document.getElementById('traintoLOHAS').style.display='none';
+                    document.getElementById('trainfromLOHAS').style.display='none';
                 }
-		        
-                s = '<table>' + s + '</table>';
-		        if (sta == 'LHP') {	    
-			        document.getElementById('nexttraintime').innerHTML = s;
-		        } else if (sta == 'NOP') {
-			        document.getElementById('fromNP').innerHTML = s;
-		        } else if (sta == 'TKO') {
-			        document.getElementById('fromTKO').innerHTML = s;
-		        };
 			
             };
 	        request.send();
@@ -167,8 +180,10 @@
         };
 
     </script>
-	<p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
+	<div class="header">
+    <p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
     <p>width = <div id="wwww"></div></p>
+    </div>
 </body>
 </head>
 </html>
