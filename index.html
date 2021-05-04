@@ -3,6 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
+    * {
+        box-sizing: border-box;
+    }
     .heading {
         text-decoration: underline;
 	    font-size: 2vw;
@@ -20,26 +23,19 @@
     }
 	
 	.centreblock {
-		position: absolute;
+        width: 33%
         overflow: auto;
-        left: 2%;
-        max-width: 100px;
+        float: left;
 	}
 
 	.leftblock {
-		position: absolute;
 		left: 5px;
 		border-style: solid;
         overflow: hidden;
-        width: 1000px;
+        width: 33%;
+        float: left;
 	}
 	
-	.container {
-		position: absolute;
-		top: 5px;
-        padding-bottom: 0;
-        padding-top: 0;
-	}
 
     .dest {
 	    font-size: 1.25vw;
@@ -52,37 +48,35 @@
 	}
 	
     body {
-        max-width: 100px;
         word-break: keep-all;
+        width: 500px;
     }
 
 
 </style>
 <body onload="testfn('LHP');testfn('NOP');testfn('TKO')">
-	<div class="container">
-		<div class="leftblock">
-			<div id="fromLOHAS">
-	    		<div class="heading">康城站</div>
-    			<div id="nexttraintime">Test</div>
-			</div>
-		</div>
-		<div class="centreblock">
-			<table>
-			    <tr>
-			        <th><div class="heading">北角站</div></th>
-			        <th></th>
-			        <th></th>
-			        <th><div class="heading">將軍澳站</div></th>
-			    </tr>
-			    <tr>
-			        <td><div id="fromNP">time from NP</div></td>
-			        <td> -> </td>
-			        <td><div id="toNP">time from NP</div></td>
-			        <td><div id="fromTKO">time from TKO</div></td>
-			    </tr>
-			</table>
-		</div>
-	</div>
+    <div class="leftblock">
+        <div id="fromLOHAS">
+            <div class="heading">康城站</div>
+            <div id="nexttraintime">Test</div>
+        </div>
+    </div>
+    <div class="centreblock">
+        <table>
+            <tr>
+                <th><div class="heading">北角站</div></th>
+                <th></th>
+                <th></th>
+                <th><div class="heading">將軍澳站</div></th>
+            </tr>
+            <tr>
+                <td><div id="fromNP">time from NP</div></td>
+                <td> -> </td>
+                <td><div id="toNP">time from NP</div></td>
+                <td><div id="fromTKO">time from TKO</div></td>
+            </tr>
+        </table>
+    </div>
 
     <script language="JavaScript">
         
@@ -175,7 +169,8 @@
         };
 
     </script>
-	<button id="button" onclick="document.getElementById('fromLOHAS').style.display='none'">Test</button>
+	<button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button>
+    <p>width = <div id="wwww"></div></p>
 </body>
 </head>
 </html>
