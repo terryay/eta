@@ -47,6 +47,10 @@
 	    font-size: 0.9em;
     }
 
+    .remark {
+	    font-size: 0.9em;
+    }
+
 
 
 	button {
@@ -62,7 +66,7 @@
 
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getBusData()">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getBusData('toLOHAS');getBusData('fromLOHAS');getBusData('690')">
     <div class="header" id="warning-message">
         abc
     </div>
@@ -95,6 +99,20 @@
             </tr>
             <tr>
                 <td><div id="busatTKOtunneltime">Test</div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock" id="busatLOHAS" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><div class="heading">康城往將隧</div></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><div id="busatLOHAStime">Test</div></td>
+                <td> -> </td>
+                <td><div id="time690"></div></td>
             </tr>
         </table>
     </div>
@@ -189,18 +207,29 @@
 
         };
 
-        function getBusData(){
+        function getBusData(direction){
             var alltime = [];
             var timestr;
             var objvar;
             var i;
             var outputstr = "";
             let request = new XMLHttpRequest();
-            let request1 = new XMLHttpRequest()
+            let request1 = new XMLHttpRequest();
+            let request2 = new XMLHttpRequest();
             var timeobj;
             
-            // request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
-            request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
+      
+            if (direction == 'toLOHAS') {
+                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
+                //request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
+            } else if (direction == '690') {
+                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5BEC0CCDD7EE4A8C/690/1'));
+            } else {
+                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/07142A6203E50A47/98/1'));
+                //request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
+            }
+
+            // 07142A6203E50A47 領都 98
             request.responseType = 'json';
             request.onload = function() {    
                 const rawdata = request.response;
@@ -208,20 +237,29 @@
                 objvar = rawdata['data']
                 for (i = 0; i < (objvar.length); i++){
                     timestr = objvar[i]['eta'];
+                    if (typeof timestr != 'string') {
+                        timestr = 'NANANANANANANANANA';
+                    }
                     timeobj = new Date(timestr);
                     alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
                 }
                 
-                if ((request.readyState == 4) && (request1.readyState == 4)) {
+                if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
                     alltime.sort(function(a,b){return a.time - b.time});
 
                     for (i = 0; i < alltime.length; i++){
-                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="time">' + alltime[i].route + '</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + '   ' + '</div></td><td><div class="dest">' + alltime[i].dest + '</div></td></tr>';
+                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
                     }
 
                 
                     outputstr = '<table>' + outputstr + '</table>';
-                    document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                    if (direction == 'toLOHAS') {
+                        document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                    } else if (direction == 'fromLOHAS') {
+                        document.getElementById("busatLOHAStime").innerHTML = outputstr;
+                    } else if (direction == '690') {
+                        document.getElementById("time690").innerHTML = outputstr;
+                    }
                 }
 
                 
@@ -229,18 +267,31 @@
             };
             request.send();
 
-            request1 = new XMLHttpRequest();
-            request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/003595/797'));
-            // request1.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
+            
+            if (direction == 'toLOHAS') {
+                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/NWFB/003595/797'));
+                //request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/002161/N72'));
+            } else if (direction == '690') {
+                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/003589/690'));
+            } else {
+                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/NWFB/002928/797'));
+                //request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/002161/N72'));
+            }
+            // 002928 領都 797
             request1.responseType = 'json';
             request1.onload = function() {    
                 const rawdata = request1.response;
 
                 objvar = rawdata['data']
                 for (i = 0; i < (objvar.length); i++){
-                    timestr = objvar[i]['eta'];
-                    timeobj = new Date(timestr);
-                    alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                    if (((direction == 'fromLOHAS') && (objvar[i]['dir'] == 'O')) || (direction != 'fromLOHAS')) {
+                        timestr = objvar[i]['eta'];
+                        if (typeof timestr != 'string') {
+                            timestr = 'NANANANANANANANANA';
+                        }
+                        timeobj = new Date(timestr);
+                        alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                    }
                 }
                 
 
@@ -248,20 +299,67 @@
 
                 
 
-                if ((request.readyState == 4) && (request1.readyState == 4)) {
+                if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
                     alltime.sort(function(a,b){return a.time - b.time});
+
                     for (i = 0; i < alltime.length; i++){
-                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="time">' + alltime[i].route + '</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + '   ' + '</div></td><td><div class="dest">' + alltime[i].dest + '</div></td></tr>';
+                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
                     }
 
-                    
+                
                     outputstr = '<table>' + outputstr + '</table>';
-                    document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                    if (direction == 'toLOHAS') {
+                        document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                    } else if (direction == 'fromLOHAS') {
+                        document.getElementById("busatLOHAStime").innerHTML = outputstr;
+                    } else if (direction == '690') {
+                        document.getElementById("time690").innerHTML = outputstr;
+                    }
                 }
 
                 
             };
             request1.send();
+
+            if (direction == '690') {
+                request2.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5BEC0CCDD7EE4A8C/690/2'));
+                //request2.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/6D4E7B9D5F9584E7/N269/1'));
+            
+                request2.responseType = 'json';
+                request2.onload = function() {    
+                    const rawdata = request2.response;
+
+                    objvar = rawdata['data']
+                    for (i = 0; i < (objvar.length); i++){
+                        timestr = objvar[i]['eta'];
+                        if (typeof timestr != 'string') {
+                            timestr = 'NANANANANANANANANA';
+                        }
+                        timeobj = new Date(timestr);
+                        alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                    }
+                    
+                    if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
+                        alltime.sort(function(a,b){return a.time - b.time});
+
+                        for (i = 0; i < alltime.length; i++){
+                            outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
+                        }
+
+                    
+                        outputstr = '<table>' + outputstr + '</table>';
+                        if (direction == 'toLOHAS') {
+                            document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
+                        } else if (direction == 'fromLOHAS') {
+                            document.getElementById("busatLOHAStime").innerHTML = outputstr;
+                        } else if (direction == '690') {
+                            document.getElementById("time690").innerHTML = outputstr;
+                        }
+                    }
+                }
+                request2.send();  
+            };
+            //request.send();
         }
 
     </script>
