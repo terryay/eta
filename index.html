@@ -1,8 +1,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <style>
     * {
@@ -49,12 +49,15 @@
 	    font-size: 0.9em;
     }
 
-    .remark {
-	    font-size: 0.9em;
+
+    span {
+        font-size: 1.3em;
+        font-family: 'Arial' , '微軟正黑體';
+        padding-bottom: 0;
+        padding-top: 0;
+		margin-bottom: 0;
+		margin-top: 0;
     }
-
-
-
 	button {
 		top: 5px;
 	}
@@ -66,66 +69,90 @@
         font-size: 100%;
     }
 
+    .remark {
+        position: relative;
+        display: inline-block;
+        font-size: 0.9em;
+    }
+
+    .tooltiptext {
+        display: none;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 105%;
+    }
+
+    .remark:hover .tooltiptext {
+        display: inline;
+    }
 
 </style>
 <body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO')">
-    <span class="material-icons">Schedule</span>
     <div class="header" id="warning-message">
         abc
     </div>
     <div class="leftblock" id="trainfromLOHAS">
         <table>
             <tr>
-                <td><div class="heading">康城站</div></td>
+                <td><span class="heading">康城站</span></td>
             </tr>
             <tr>
-                <td><div id="nexttraintime">Test</div></td>
+                <td><span id="nexttraintime">Test</span></td>
             </tr>
         </table>
     </div>
     <div class="centreblock" id="traintoLOHAS">
         <table style="min-width: 100%;">
             <tr>
-                <td style="min-width:50%"><div class="heading">北角站</div></td>
-                <td style="min-width:50%"><div class="heading">將軍澳站</div></td>
+                <td style="min-width:50%"><span class="heading">北角站</span></td>
+                <td style="min-width:50%"><span class="heading">將軍澳站</span></td>
             </tr>
             <tr>
-                <td><div id="fromNP">time from NP</div></td>
-                <td style="vertical-align: top"><div id="fromTKO">time from TKO</div></td>
+                <td><span id="fromNP">time from NP</span></td>
+                <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>
             </tr>
         </table>
     </div>
     <div class="leftblock" id="busatTKOtunnel" style="width: 100%">
         <table style="min-width: 100%;">
             <tr>
-                <td><div class="heading">將隧往康城</div></td>
+                <td><span class="heading">將隧往康城</span></td>
             </tr>
             <tr>
-                <td><div id="TKOtunneltoLOHAS">Test</div></td>
+                <td><span id="TKOtunneltoLOHAS">Test</span></td>
             </tr>
         </table>
     </div>
     <div class="leftblock" id="busatLOHAS" style="width: 100%">
         <table style="min-width: 100%;">
             <tr>
-                <td><div class="heading">康城往將隧</div></td>
+                <td><span class="heading">康城往將隧</span></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
-                <td><div id="LOHAStoTKOtunnel">Test</div></td>
+                <td><span id="LOHAStoTKOtunnel">Test</span></td>
                 <td> -> </td>
-                <td><div id="TKOtunneltoHKI"></div></td>
+                <td><span id="TKOtunneltoHKI"></span></td>
             </tr>
         </table>
     </div>
     <div class="leftblock" id="busatLOHAS" style="width: 100%">
         <table style="min-width: 100%;">
             <tr>
-                <td><div class="heading">New</div></td>
+                <td><span class="heading">New</span></td>
             </tr>
             <tr>
-                <td><div id="TKOtunneltoLOHAS">Test</div></td>
+                <td><span id="TKOtunneltoLOHAS">Test</span></td>
             </tr>
         </table>
     </div>
@@ -203,7 +230,7 @@
                         }
                                     
                         if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
-                            s = s + '<tr><td style="vertical-align: top"><div class="time">' + timestr + '   ' + '</div></td><td><div class="dest">' + deststring + '</div></td></tr>';
+                            s = s + '<tr><td style="vertical-align: top"><span class="time">' + timestr + '   ' + '</span></td><td><span class="dest">' + deststring + '</span></td></tr>';
                         }
 
                         
@@ -289,175 +316,22 @@
             elementarr[elementid].sort(function(a,b){return a.time - b.time});
 
             for (i = 0; i < elementarr[elementid].length; i++){
-                if (elementarr[elementid][i].remark == '最後班次') {
-                    elementarr[elementid][i].remark = '<span class="material-icons">Schedule</span>';
+                if (elementarr[elementid][i].remark == '原定班次') {
+                    elementarr[elementid][i].remark = '<span class="material-icons">&#xe8b5</span>';
+                } else if (elementarr[elementid][i].remark != '') {
+                    elementarr[elementid][i].remark = '<span class="material-icons">&#xe002</span><span class="tooltiptext">' + elementarr[elementid][i].remark + '</span>';
                 }
-                outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + elementarr[elementid][i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + elementarr[elementid][i].remark + '</td></tr>';
+                outputstr = outputstr + '<tr><td style="vertical-align: top"><span class="route">' + elementarr[elementid][i].route + '&nbsp;&nbsp;&nbsp;</span></td><td style="vertical-align: top"><span class="time">' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</span></td><td><span class="remark">' + elementarr[elementid][i].remark + '</span></td></tr>';
             }
             outputstr = '<table>' + outputstr + '</table>';
             document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
         }
 
-        /*
-        function getBusData(direction){
-            var alltime = [];
-            var timestr;
-            var objvar;
-            var i;
-            var outputstr = "";
-            let request = new XMLHttpRequest();
-            let request1 = new XMLHttpRequest();
-            let request2 = new XMLHttpRequest();
-            var timeobj;
-            
-      
-            if (direction == 'toLOHAS') {
-                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/97D1981DE7ECBCE7/98/1'));
-                //request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
-            } else if (direction == '690') {
-                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5BEC0CCDD7EE4A8C/690/1'));
-            } else {
-                request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/07142A6203E50A47/98/1'));
-                //request.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5238463F47B490D6/N260/1'));
-            }
-
-            // 07142A6203E50A47 領都 98
-            request.responseType = 'json';
-            request.onload = function() {    
-                const rawdata = request.response;
-
-                objvar = rawdata['data']
-                for (i = 0; i < (objvar.length); i++){
-                    timestr = objvar[i]['eta'];
-                    if (typeof timestr != 'string') {
-                        timestr = 'NANANANANANANANANA';
-                    }
-                    timeobj = new Date(timestr);
-                    alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
-                }
-                
-                if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
-                    alltime.sort(function(a,b){return a.time - b.time});
-
-                    for (i = 0; i < alltime.length; i++){
-                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
-                    }
-
-                
-                    outputstr = '<table>' + outputstr + '</table>';
-                    if (direction == 'toLOHAS') {
-                        document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
-                    } else if (direction == 'fromLOHAS') {
-                        document.getElementById("busatLOHAStime").innerHTML = outputstr;
-                    } else if (direction == '690') {
-                        document.getElementById("time690").innerHTML = outputstr;
-                    }
-                }
-
-                
-                
-            };
-            request.send();
-
-            
-            if (direction == 'toLOHAS') {
-                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/NWFB/003595/797'));
-                //request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/002161/N72'));
-            } else if (direction == '690') {
-                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/003589/690'));
-            } else {
-                request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/NWFB/002928/797'));
-                //request1.open('GET', ('https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/CTB/002161/N72'));
-            }
-            // 002928 領都 797
-            request1.responseType = 'json';
-            request1.onload = function() {    
-                const rawdata = request1.response;
-
-                objvar = rawdata['data']
-                for (i = 0; i < (objvar.length); i++){
-                    if (((direction == 'fromLOHAS') && (objvar[i]['dir'] == 'O')) || (direction != 'fromLOHAS')) {
-                        timestr = objvar[i]['eta'];
-                        if (typeof timestr != 'string') {
-                            timestr = 'NANANANANANANANANA';
-                        }
-                        timeobj = new Date(timestr);
-                        alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
-                    }
-                }
-                
-
-                
-
-                
-
-                if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
-                    alltime.sort(function(a,b){return a.time - b.time});
-
-                    for (i = 0; i < alltime.length; i++){
-                        outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
-                    }
-
-                
-                    outputstr = '<table>' + outputstr + '</table>';
-                    if (direction == 'toLOHAS') {
-                        document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
-                    } else if (direction == 'fromLOHAS') {
-                        document.getElementById("busatLOHAStime").innerHTML = outputstr;
-                    } else if (direction == '690') {
-                        document.getElementById("time690").innerHTML = outputstr;
-                    }
-                }
-
-                
-            };
-            request1.send();
-
-            if (direction == '690') {
-                request2.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/5BEC0CCDD7EE4A8C/690/2'));
-                //request2.open('GET', ('https://data.etabus.gov.hk/v1/transport/kmb/eta/6D4E7B9D5F9584E7/N269/1'));
-            
-                request2.responseType = 'json';
-                request2.onload = function() {    
-                    const rawdata = request2.response;
-
-                    objvar = rawdata['data']
-                    for (i = 0; i < (objvar.length); i++){
-                        timestr = objvar[i]['eta'];
-                        if (typeof timestr != 'string') {
-                            timestr = 'NANANANANANANANANA';
-                        }
-                        timeobj = new Date(timestr);
-                        alltime.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
-                    }
-                    
-                    if ((request.readyState == 4) && (request1.readyState == 4) && ((direction != '690') || (request2.readyState == 4))) {
-                        alltime.sort(function(a,b){return a.time - b.time});
-
-                        for (i = 0; i < alltime.length; i++){
-                            outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + alltime[i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + alltime[i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + alltime[i].remark + '</td></tr>';
-                        }
-
-                    
-                        outputstr = '<table>' + outputstr + '</table>';
-                        if (direction == 'toLOHAS') {
-                            document.getElementById("busatTKOtunneltime").innerHTML = outputstr;
-                        } else if (direction == 'fromLOHAS') {
-                            document.getElementById("busatLOHAStime").innerHTML = outputstr;
-                        } else if (direction == '690') {
-                            document.getElementById("time690").innerHTML = outputstr;
-                        }
-                    }
-                }
-                request2.send();  
-            };
-            //request.send();
-        }
-        */
+        
     </script>
 	<div class="header">
     <p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
-    <p>width = <div id="wwww"></div></p>
+    <p>width = <span id="wwww"></span></p>
     </div>
 </body>
 </head>
