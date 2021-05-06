@@ -2,6 +2,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <style>
@@ -96,7 +97,7 @@
     }
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getLocation();">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');">
     <div class="header" id="warning-message">
         abc
     </div>
@@ -402,6 +403,7 @@
             document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
         }
 
+        
         var x = document.getElementById("demo");
         function getLocation() {
             if (navigator.geolocation) {
@@ -418,9 +420,10 @@
 
         
     </script>
-	<div class="header"></div> <!-- style="display: none;" -->
-    <p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
+	<div class="header" style="display: block;">
+    <p><button id="button" onclick="getLocation()">Test</button></p>
     <p>width = <span id="demo"></span></p>
+    <a href="test.html">Go to page 2</a>
     </div>
 </body>
 </head>
