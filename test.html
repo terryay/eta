@@ -1,0 +1,427 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    .heading {
+        text-decoration: underline;
+	    font-size: 1.3em;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    div {
+        font-size: 1.3em;
+        font-family: 'Arial' , '微軟正黑體';
+        padding-bottom: 0;
+        padding-top: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+    }
+	
+	.centreblock {
+        width: 65%;
+        overflow: auto;
+        float: left;
+	}
+
+	.leftblock {
+		left: 5px;
+        overflow: auto;
+        width: 35%;
+        float: left;
+	}
+
+	.header {
+		left: 5px;
+		border-style: solid;
+        overflow: auto;
+        width: 100%;
+        float: left;
+	}
+
+    .dest {
+	    font-size: 0.9em;
+    }
+
+
+    span {
+        font-size: 1.3em;
+        font-family: 'Arial' , '微軟正黑體';
+        padding-bottom: 0;
+        padding-top: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+    }
+	button {
+		top: 5px;
+	}
+	
+    body {
+        word-break: keep-all;
+        width: 360px;
+        overflow: auto;
+        font-size: 100%;
+    }
+
+    .remark {
+        position: relative;
+        display: inline-block;
+        font-size: 0.9em;
+    }
+
+    .tooltiptext {
+        display: none;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 105%;
+    }
+
+    .remark:hover .tooltiptext {
+        display: inline;
+    }
+
+</style>
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getLocation();">
+    <div class="header" id="warning-message">
+        abc
+    </div>
+    <div class="leftblock fromLOHAS" id="trainfromLOHAS">
+        <table>
+            <tr>
+                <td><span class="heading">康城站</span></td>
+            </tr>
+            <tr>
+                <td><span id="nexttraintime">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="centreblock fromLOHAS" id="FortressHill">
+        <table style="min-width: 100%;">
+            <tr>
+                <td colspan="2"><span class="heading">炮台山站</span></td>
+            </tr>
+            <tr>
+                <td><span id="FortressHilltoHKSH">Test</span></td>
+                <td><span id="FortressHilltoTWEH">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock fromLOHAS" id="busatLOHAS" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><span class="heading">康城往將隧</span></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><span id="LOHAStoTKOtunnel">Test</span></td>
+                <td> -> </td>
+                <td><span id="TKOtunneltoHKI"></span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="centreblock toLOHAS" id="traintoLOHAS">
+        <table style="min-width: 100%;">
+            <tr>
+                <td style="min-width:50%"><span class="heading">北角站</span></td>
+                <td style="min-width:50%"><span class="heading">將軍澳站</span></td>
+            </tr>
+            <tr>
+                <td><span id="fromNP">time from NP</span></td>
+                <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock toLOHAS fromTKO" id="busatTKOtunnel" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><span class="heading">將隧往康城</span></td>
+            </tr>
+            <tr>
+                <td><span id="TKOtunneltoLOHAS">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="leftblock toLOHAS fromWanChai" id="WanChaiFS" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><span class="heading">灣仔消防局</span><span style="font-size: 1em"> 603要喺東隧口落</span></td>
+            </tr>
+            <tr>
+                <td><span id="WanChaiFireStationtoTKO">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock toLOHAS fromVP" id="VPark" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><span class="heading">維多利亞公園</span><span style="font-size: 1em"> 603要喺東隧口落</span></td>
+            </tr>
+            <tr>
+                <td><span id="VictoriaParktoTKO">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock toLOHAS fromHKSH" id="HKSH" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><span class="heading">HKSH</span></td>
+            </tr>
+            <tr>
+                <td><span id="HKSHtoCWB">Test</span></td>
+            </tr>
+        </table>
+    </div>
+    
+
+    <script language="JavaScript">
+
+        var elementidarr = ['TKOtunneltoLOHAS',
+                            'LOHAStoTKOtunnel',
+                            'TKOtunneltoHKI',
+                            'WanChaiFireStationtoTKO',
+                            'VictoriaParktoTKO',
+                            'HKSHtoCWB',
+                            'FortressHilltoHKSH',
+                            'FortressHilltoTWEH'];
+        var elementarr = [[],[],[],[],[],[],[],[]];
+
+        getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
+        getBustime('NWFB','003595', '797', 0);
+        getBustime('KMB','07142A6203E50A47','98',1,'','1');
+        getBustime('NWFB','002928', '797', 1, 'O');
+        getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','1');
+        getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','2');
+        getBustime('CTB', '003589', '690', 2);
+        getBustime('CTB', '002437', '601P', 3);
+        getBustime('CTB', '002437', '690', 3);
+        getBustime('CTB', '002437', '619', 3);
+        getBustime('CTB', '002437', '619X', 3);
+        getBustime('CTB', '002437', '601', 3);
+        getBustime('KMB', 'CCBCD7F613287BC8', '601P', 3, '','1');
+        getBustime('KMB', 'CCBCD7F613287BC8', '690', 3, '','1');
+        getBustime('KMB', 'CCBCD7F613287BC8', '619', 3, '','1');
+        getBustime('KMB', 'CCBCD7F613287BC8', '619X', 3, '','1');
+        getBustime('KMB', 'CCBCD7F613287BC8', '603', 3, '','1');
+        getBustime('KMB', 'CCBCD7F613287BC8', '601', 3, '','1');
+        getBustime('CTB', '001213', '601P', 4);
+        getBustime('CTB', '001213', '601', 4);
+        getBustime('CTB', '001213', '690', 4);
+        getBustime('CTB', '001213', '619', 4);
+        getBustime('CTB', '001213', '619X', 4);
+        getBustime('KMB', '913E96996F3B7E3A', '601P', 4, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '601', 4, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '690', 4, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '619', 4, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '619X', 4, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '603', 4, '','1');
+        getBustime('CTB', '002552', '8X', 5);
+        getBustime('CTB', '002552', '19', 5);
+        getBustime('CTB', '001283', '8X', 6);
+        getBustime('CTB', '001283', '19', 6);
+        getBustime('CTB', '001283', '678', 7);
+        getBustime('KMB', 'DA2677E4FF848D7C', '678', 7,'','1');
+
+        
+
+		function getMTRData(sta){
+            
+	        var i;
+	        var d;
+	        var s = "";
+	        var s1 = "";
+            var deststring;
+            var dest;
+            var m, m1, d1;
+	        var objvar;
+	        let request = new XMLHttpRequest();
+            var timestr;
+            
+            request.open('GET', ('https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TKL&sta=' + sta));
+            request.responseType = 'json';
+            request.onload = function() {
+                const rawdata = request.response;
+
+                if (rawdata['status'] == 1){
+                    if (sta == 'LHP') {
+                        objvar = rawdata['data']['TKL-LHP']['DOWN'];
+                    } else if (sta == 'NOP') {
+                        objvar = rawdata['data']['TKL-NOP']['UP'];
+                    } else if (sta == 'TKO') {
+                        objvar = rawdata['data']['TKL-TKO']['UP'];
+                    }
+
+
+                    for (i = 0; i < (objvar.length); i++){
+                        timestr = objvar[i]['time']
+                        timestr = timestr.substr(11,5)
+                        dest = objvar[i]['dest']
+                        switch (dest) {
+                            case 'NOP':
+                                deststring = '北角';
+                                break;
+                            case 'QUB':
+                                deststring = '鰂魚涌';
+                                break;
+                            case 'YAT':
+                                deststring = '油塘';
+                                break;
+                            case 'TIK':
+                                deststring = '調景嶺';
+                                break;
+                            case 'TKO':
+                                deststring = '將軍澳';
+                                break;
+                            case 'LHP':
+                                deststring = '康城';
+                                break;
+                            case 'HAH':
+                                deststring = '坑口';
+                                break;
+                            case 'POA':
+                                deststring = '寶琳';
+                        }
+                                    
+                        if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
+                            s = s + '<tr><td style="vertical-align: top"><span class="time">' + timestr + '   ' + '</span></td><td><span class="dest">' + deststring + '</span></td></tr>';
+                        }
+
+                        
+                    }
+                    
+                    s = '<table>' + s + '</table>';
+                    if (sta == 'LHP') {	    
+                        document.getElementById('nexttraintime').innerHTML = s;
+                    } else if (sta == 'NOP') {
+                        document.getElementById('fromNP').innerHTML = s;
+                    } else if (sta == 'TKO') {
+                        document.getElementById('fromTKO').innerHTML = s;
+                    };
+                    document.getElementById('warning-message').style.display='none';
+                    document.getElementById('traintoLOHAS').style.display='block';
+                    document.getElementById('trainfromLOHAS').style.display='block';
+                } else {
+                    document.getElementById('warning-message').innerText = rawdata['message'];
+                    document.getElementById('warning-message').style.display='block';
+                    document.getElementById('traintoLOHAS').style.display='none';
+                    document.getElementById('trainfromLOHAS').style.display='none';
+                }
+			
+            };
+	        request.send();
+
+        };
+
+
+        function getBustime(buscompany,stopid,routeid,elementid,direction,servicevariant){
+            let reqstring;
+            let request = new XMLHttpRequest();
+            let timestr, timeobj;
+            let returnarr = [];
+            let objvar;
+            let i;
+
+            if (buscompany == 'KMB') {
+                reqstring = 'https://data.etabus.gov.hk/v1/transport/kmb/eta/' + stopid + '/' + routeid + '/' + servicevariant;
+            } else {
+                reqstring = 'https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/' + buscompany + '/' + stopid + '/' + routeid;
+            }
+            
+            request.open('GET', reqstring);
+            request.responseType = 'json';
+            request.onload = function() {    
+                const rawdata = request.response;
+
+                objvar = rawdata['data']
+                for (i = 0; i < (objvar.length); i++){
+                    timestr = objvar[i]['eta'];
+                    if (typeof timestr != 'string') {
+                        timestr = '';
+                    }
+                    timeobj = new Date(timestr);
+                    
+                    if (objvar[i]['rmk_tc'] != '九巴時段'){
+                        if ((direction === undefined) || (direction == "")) {
+                            returnarr.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                        } else {
+                            if (objvar[i]['dir'] == direction) {
+                                returnarr.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                            }
+                        }
+                    }
+                }
+
+                updateElement(elementid,returnarr);
+                
+                return returnarr;
+                
+            };
+            request.send();
+
+        }
+
+        
+
+
+
+        function updateElement(elementid,returnarr){
+            let outputstr = '';
+            let remarkstr = '';
+            elementarr[elementid] = elementarr[elementid].concat(returnarr);
+
+            
+            elementarr[elementid].sort(function(a,b){return a.time - b.time});
+
+            for (i = 0; i < elementarr[elementid].length; i++){
+                if (elementarr[elementid][i].remark == '原定班次') {
+                    remarkstr = '<span class="material-icons">&#xe8b5</span><span class="tooltiptext">' + elementarr[elementid][i].remark + '</span>';
+                } else if (elementarr[elementid][i].remark != '') {
+                    remarkstr = '<span class="material-icons">&#xe002</span><span class="tooltiptext">' + elementarr[elementid][i].remark + '</span>';
+                } else {
+                    remarkstr = '';
+                }
+                outputstr = outputstr + '<tr><td style="vertical-align: top"><span class="route">' + elementarr[elementid][i].route + '&nbsp;&nbsp;&nbsp;</span></td><td style="vertical-align: top"><span class="time">' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</span></td><td><span class="remark">' + remarkstr + '</span></td></tr>';
+            }
+            outputstr = '<table>' + outputstr + '</table>';
+            document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
+        }
+
+        var x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerText = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+        }
+
+        
+    </script>
+	<div class="header"></div> <!-- style="display: none;" -->
+    <p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
+    <p>width = <span id="demo"></span></p>
+    </div>
+</body>
+</head>
+</html>
