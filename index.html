@@ -1,6 +1,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <style>
     * {
@@ -66,7 +68,8 @@
 
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getBusData('toLOHAS');getBusData('fromLOHAS');getBusData('690')">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO')">
+    <span class="material-icons">Schedule</span>
     <div class="header" id="warning-message">
         abc
     </div>
@@ -98,7 +101,7 @@
                 <td><div class="heading">將隧往康城</div></td>
             </tr>
             <tr>
-                <td><div id="busatTKOtunneltime">Test</div></td>
+                <td><div id="TKOtunneltoLOHAS">Test</div></td>
             </tr>
         </table>
     </div>
@@ -110,15 +113,37 @@
                 <td></td>
             </tr>
             <tr>
-                <td><div id="busatLOHAStime">Test</div></td>
+                <td><div id="LOHAStoTKOtunnel">Test</div></td>
                 <td> -> </td>
-                <td><div id="time690"></div></td>
+                <td><div id="TKOtunneltoHKI"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="leftblock" id="busatLOHAS" style="width: 100%">
+        <table style="min-width: 100%;">
+            <tr>
+                <td><div class="heading">New</div></td>
+            </tr>
+            <tr>
+                <td><div id="TKOtunneltoLOHAS">Test</div></td>
             </tr>
         </table>
     </div>
 
     <script language="JavaScript">
+
+        var elementidarr = ['TKOtunneltoLOHAS','LOHAStoTKOtunnel','TKOtunneltoHKI'];
+        var elementarr = [[],[],[]];
+
+        getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
+        getBustime('NWFB','003595', '797', 0);
+        getBustime('KMB','07142A6203E50A47','98',1,'','1');
+        getBustime('NWFB','002928', '797', 1, 'O');
+        getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','1');
+        getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','2');
+        getBustime('CTB', '003589', '690', 2);
         
+
 		function getMTRData(sta){
             
 	        var i;
@@ -207,6 +232,73 @@
 
         };
 
+
+        function getBustime(buscompany,stopid,routeid,elementid,direction,servicevariant){
+            let reqstring;
+            let request = new XMLHttpRequest();
+            let timestr, timeobj;
+            let returnarr = [];
+            let objvar;
+            let i;
+
+            if (buscompany == 'KMB') {
+                reqstring = 'https://data.etabus.gov.hk/v1/transport/kmb/eta/' + stopid + '/' + routeid + '/' + servicevariant;
+            } else {
+                reqstring = 'https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/' + buscompany + '/' + stopid + '/' + routeid;
+            }
+            
+            request.open('GET', reqstring);
+            request.responseType = 'json';
+            request.onload = function() {    
+                const rawdata = request.response;
+
+                objvar = rawdata['data']
+                for (i = 0; i < (objvar.length); i++){
+                    timestr = objvar[i]['eta'];
+                    if (typeof timestr != 'string') {
+                        timestr = 'NANANANANANANANANA';
+                    }
+                    timeobj = new Date(timestr);
+                    if ((direction === undefined) || (direction == "")) {
+                        returnarr.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                    } else {
+                        if (objvar[i]['dir'] == direction) {
+                            returnarr.push({route:objvar[i]['route'], time:timeobj, dest:objvar[i]['dest_tc'], remark:objvar[i]['rmk_tc'], timestr:timestr});
+                        }
+                    }
+                }
+
+                updateElement(elementid,returnarr);
+                
+                return returnarr;
+                
+            };
+            request.send();
+
+        }
+
+        
+
+
+
+        function updateElement(elementid,returnarr){
+            let outputstr = "";
+            elementarr[elementid] = elementarr[elementid].concat(returnarr);
+
+            
+            elementarr[elementid].sort(function(a,b){return a.time - b.time});
+
+            for (i = 0; i < elementarr[elementid].length; i++){
+                if (elementarr[elementid][i].remark == '最後班次') {
+                    elementarr[elementid][i].remark = '<span class="material-icons">Schedule</span>';
+                }
+                outputstr = outputstr + '<tr><td style="vertical-align: top"><div class="route">' + elementarr[elementid][i].route + '&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top"><div class="time">' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</div></td><td><div class="remark">' + elementarr[elementid][i].remark + '</td></tr>';
+            }
+            outputstr = '<table>' + outputstr + '</table>';
+            document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
+        }
+
+        /*
         function getBusData(direction){
             var alltime = [];
             var timestr;
@@ -361,7 +453,7 @@
             };
             //request.send();
         }
-
+        */
     </script>
 	<div class="header">
     <p><button id="button" onclick="document.getElementById('wwww').innerText = window.innerWidth">Test</button></p>
