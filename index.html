@@ -96,90 +96,59 @@
         display: inline;
     }
 
+    table {
+        border-collapse: collapse;
+    }
+
+    .spaceholder {
+        height: 5px;
+    }
+
 </style>
 <body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getLocation()">
     <div class="header" id="warning-message">
         abc
     </div>
-    <div class="leftblock fromLOHAS" id="trainfromLOHAS">
-        <table>
-            <tr>
-                <td><span class="heading">康城站</span></td>
-            </tr>
-            <tr>
-                <td><span id="nexttraintime">Test</span></td>
-            </tr>
-        </table>
-    </div>
-    <div class="centreblock fromLOHAS" id="FortressHill">
+    <div style="border: solid; border-width: 2.5px" id="fromLOHAS">
         <table style="min-width: 100%;">
             <tr>
-                <td colspan="2"><span class="heading">炮台山站</span></td>
+                <td><span class="heading">康城站</span><span class="material-icons">&#xe56f</span></td>
+                <td colspan="2" align="center"><span class="heading">炮台山站</span></td>
             </tr>
             <tr>
-                <td><span id="FortressHilltoHKSH">Test</span></td>
-                <td><span id="FortressHilltoTWEH">Test</span></td>
+                <td style="min-width: 33%;vertical-align: top"><span id="nexttraintime">Test</span></td>
+                <td style="min-width: 33%;vertical-align: top"><span id="FortressHilltoHKSH">Test</span></td>
+                <td style="min-width: 33%;vertical-align: top"><span id="FortressHilltoTWEH">Test</span></td>
             </tr>
-        </table>
-    </div>
-    <div class="leftblock fromLOHAS" id="busatLOHAS" style="width: 100%">
-        <table style="min-width: 100%;">
             <tr>
-                <td><span class="heading">康城往將隧</span></td>
-                <td></td>
-                <td></td>
+                <td style="min-width: 33%; border-top: solid; border-width: 1px;"><span class="heading">康城往將隧</span></td>
+                <td style="min-width: 33%; border-top: solid; border-width: 1px;"></td>
+                <td style="min-width: 33%; border-top: solid; border-width: 1px;"></td>
             </tr>
             <tr>
                 <td><span id="LOHAStoTKOtunnel">Test</span></td>
-                <td> -> </td>
+                <td align="center"> -> </td>
                 <td><span id="TKOtunneltoHKI"></span></td>
             </tr>
         </table>
     </div>
-    <div class="centreblock toLOHAS" id="traintoLOHAS">
+    <div class="spaceholder"></div>
+    <div id="toLOHAS" style="border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
             <tr>
-                <td style="min-width:50%"><span class="heading">北角站</span></td>
-                <td style="min-width:50%"><span class="heading">將軍澳站</span></td>
+                <td style="min-width:33%"><span class="heading">北角站</span><span class="material-icons">&#xe56f</span></td>
+                <td style="min-width:33%"><span class="heading">將軍澳站</span><span class="material-icons">&#xe56f</span></td>
+                <td style="min-width:33%; border-left: solid; border-width: 1px;"><span class="heading">將隧往康城</span></td>
             </tr>
             <tr>
-                <td><span id="fromNP">time from NP</span></td>
+                <td style="vertical-align: top"><span id="fromNP">time from NP</span></td>
                 <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>
+                <td style="min-width:33%; border-left: solid; border-width: 1px;vertical-align: top"><span id="TKOtunneltoLOHAS">Test</span></td>
             </tr>
         </table>
     </div>
-    <div class="leftblock toLOHAS fromTKO" id="busatTKOtunnel" style="width: 100%">
-        <table style="min-width: 100%;">
-            <tr>
-                <td><span class="heading">將隧往康城</span></td>
-            </tr>
-            <tr>
-                <td><span id="TKOtunneltoLOHAS">Test</span></td>
-            </tr>
-        </table>
-    </div>
-    
-    <div class="leftblock toLOHAS fromWanChai" id="WanChaiFS" style="width: 100%">
-        <table style="min-width: 100%;">
-            <tr>
-                <td><span class="heading">灣仔消防局</span><span style="font-size: 1em"> 603要喺東隧口落</span></td>
-            </tr>
-            <tr>
-                <td><span id="WanChaiFireStationtoTKO">Test</span></td>
-            </tr>
-        </table>
-    </div>
-    <div class="leftblock toLOHAS fromVP" id="VPark" style="width: 100%">
-        <table style="min-width: 100%;">
-            <tr>
-                <td><span class="heading">維多利亞公園</span><span style="font-size: 1em"> 603要喺東隧口落</span></td>
-            </tr>
-            <tr>
-                <td><span id="VictoriaParktoTKO">Test</span></td>
-            </tr>
-        </table>
-    </div>
-    <div class="leftblock toLOHAS fromHKSH" id="HKSH" style="width: 100%">
+    <div class="spaceholder"></div>
+    <div class="toLOHAS fromHKSH" id="HKSH" style="width: 100%; border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
             <tr>
                 <td><span class="heading">HKSH</span></td>
@@ -188,8 +157,26 @@
                 <td><span id="HKSHtoCWB">Test</span></td>
             </tr>
         </table>
+    </div>    
+    <div class="spaceholder"></div>
+    <div id="WanChaiCWB" style="width: 100%;border: solid; border-width: 2.5px">
+        <table style="min-width: 100%;">
+            <tr>
+                <td style="min-width:50%"><span class="heading">灣仔消防局</span></td>
+                <td style="min-width:50%"><span class="heading">維多利亞公園</span></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center" style="background-color: lightgoldenrodyellow;"><span style="font-size: 1em; font-weight: bold;"> 603要喺東隧口落</span></td>
+            </tr>
+            <tr>
+                <td style="min-width:50%"><span id="WanChaiFireStationtoTKO">Test</span></td>
+                <td style="min-width:50%"><span id="VictoriaParktoTKO">Test</span></td>
+            </tr>
+        </table>
     </div>
-    <div class="header" style="display: block;">
+
+
+    <div class="header" style="display: none;">
         <p><button id="button" onclick="getLocation()">Test</button></p>
         <p>width = <span id="demo"></span></p>
         <a href="test.html">Go to page 2</a>
@@ -213,19 +200,25 @@
         getBustime('KMB','07142A6203E50A47','98',1,'','1');
         getBustime('NWFB','002928', '797', 1, 'O');
         getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','1');
-        getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','2');
         getBustime('CTB', '003589', '690', 2);
         getBustime('NWFB', '002437', '601P', 3);
         getBustime('CTB', '002437', '690', 3);
         getBustime('CTB', '002437', '619', 3);
         getBustime('CTB', '002437', '619X', 3);
         getBustime('NWFB', '002437', '601', 3);
+        getBustime('CTB', '002437', 'N8X', 0);
+        getBustime('CTB', '002437', 'N8X', 1);
+        getBustime('CTB', '002437', 'N8X', 2);
+        getBustime('CTB', '002437', 'N8X', 3);
+        getBustime('CTB', '002437', 'N8X', 4);
+        getBustime('CTB', '002437', 'N8X', 5);
+        getBustime('CTB', '002437', 'N8X', 6);
+        getBustime('CTB', '002437', 'N8X', 7);
         getBustime('KMB', 'CCBCD7F613287BC8', '601P', 3, '','1');
         getBustime('KMB', 'A07CC0A6D462A579', '690', 3, '','1');
         getBustime('KMB', 'A07CC0A6D462A579', '619', 3, '','1');
         getBustime('KMB', 'A07CC0A6D462A579', '619X', 3, '','1');
         getBustime('KMB', 'F1A22B170518051B', '603', 3, '','1');
-        getBustime('KMB', 'F1A22B170518051B', '603', 3, '','2');
         getBustime('KMB', 'CCBCD7F613287BC8', '601', 3, '','1');
         getBustime('NWFB', '001213', '601P', 4);
         getBustime('NWFB', '001213', '601', 4);
@@ -238,7 +231,6 @@
         getBustime('KMB', '9541036143D6CCF1', '619', 4, '','1');
         getBustime('KMB', '9541036143D6CCF1', '619X', 4, '','1');
         getBustime('KMB', '84C5EBC00642536A', '603', 4, '','1');
-        getBustime('KMB', '84C5EBC00642536A', '603', 4, '','2');
         getBustime('CTB', '002552', '8X', 5);
         getBustime('CTB', '002552', '19', 5);
         getBustime('CTB', '001283', '8X', 6);
@@ -321,13 +313,10 @@
                         document.getElementById('fromTKO').innerHTML = s;
                     };
                     document.getElementById('warning-message').style.display='none';
-                    document.getElementById('traintoLOHAS').style.display='block';
-                    document.getElementById('trainfromLOHAS').style.display='block';
                 } else {
                     document.getElementById('warning-message').innerText = rawdata['message'];
                     document.getElementById('warning-message').style.display='block';
-                    document.getElementById('traintoLOHAS').style.display='none';
-                    document.getElementById('trainfromLOHAS').style.display='none';
+
                 }
 			
             };
@@ -390,20 +379,28 @@
         function updateElement(elementid,returnarr){
             let outputstr = '';
             let remarkstr = '';
+            let highlightstr = '';
             elementarr[elementid] = elementarr[elementid].concat(returnarr);
 
             
             elementarr[elementid].sort(function(a,b){return a.time - b.time});
 
             for (i = 0; i < elementarr[elementid].length; i++){
+                highlightstr = '';
                 if (elementarr[elementid][i].remark == '原定班次') {
                     remarkstr = '<span class="material-icons">&#xe8b5</span><span class="tooltiptext">' + elementarr[elementid][i].remark + '</span>';
+                } else if (elementarr[elementid][i].remark == '最後班次已過') {
+                    remarkstr = '';
                 } else if (elementarr[elementid][i].remark != '') {
                     remarkstr = '<span class="material-icons">&#xe002</span><span class="tooltiptext">' + elementarr[elementid][i].remark + '</span>';
                 } else {
                     remarkstr = '';
                 }
-                outputstr = outputstr + '<tr><td style="vertical-align: top"><span class="route">' + elementarr[elementid][i].route + '&nbsp;&nbsp;&nbsp;</span></td><td style="vertical-align: top"><span class="time">' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</span></td><td><span class="remark">' + remarkstr + '</span></td></tr>';
+
+                if (elementarr[elementid][i].route == '690') {
+                    highlightstr = ' style="color: MediumBlue; font-weight: bold"';
+                }
+                outputstr = outputstr + '<tr><td style="vertical-align: top"><span class="route"' + highlightstr + '>' + elementarr[elementid][i].route + '&nbsp;&nbsp;</span></td><td style="vertical-align: top"><span class="time"' + highlightstr + '>' + elementarr[elementid][i].timestr.substr(11,5) + ' ' + '</span></td><td><span class="remark">' + remarkstr + '</span></td></tr>';
             }
             outputstr = '<table>' + outputstr + '</table>';
             document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
