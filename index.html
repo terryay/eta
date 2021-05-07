@@ -97,7 +97,7 @@
     }
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');getLocation()">
     <div class="header" id="warning-message">
         abc
     </div>
@@ -189,7 +189,11 @@
             </tr>
         </table>
     </div>
-    
+    <div class="header" style="display: block;">
+        <p><button id="button" onclick="getLocation()">Test</button></p>
+        <p>width = <span id="demo"></span></p>
+        <a href="test.html">Go to page 2</a>
+    </div>
 
     <script language="JavaScript">
 
@@ -203,6 +207,7 @@
                             'FortressHilltoTWEH'];
         var elementarr = [[],[],[],[],[],[],[],[]];
 
+        
         getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
         getBustime('NWFB','003595', '797', 0);
         getBustime('KMB','07142A6203E50A47','98',1,'','1');
@@ -210,35 +215,36 @@
         getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','1');
         getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','2');
         getBustime('CTB', '003589', '690', 2);
-        getBustime('CTB', '002437', '601P', 3);
+        getBustime('NWFB', '002437', '601P', 3);
         getBustime('CTB', '002437', '690', 3);
         getBustime('CTB', '002437', '619', 3);
         getBustime('CTB', '002437', '619X', 3);
-        getBustime('CTB', '002437', '601', 3);
+        getBustime('NWFB', '002437', '601', 3);
         getBustime('KMB', 'CCBCD7F613287BC8', '601P', 3, '','1');
-        getBustime('KMB', 'CCBCD7F613287BC8', '690', 3, '','1');
-        getBustime('KMB', 'CCBCD7F613287BC8', '619', 3, '','1');
-        getBustime('KMB', 'CCBCD7F613287BC8', '619X', 3, '','1');
-        getBustime('KMB', 'CCBCD7F613287BC8', '603', 3, '','1');
+        getBustime('KMB', 'A07CC0A6D462A579', '690', 3, '','1');
+        getBustime('KMB', 'A07CC0A6D462A579', '619', 3, '','1');
+        getBustime('KMB', 'A07CC0A6D462A579', '619X', 3, '','1');
+        getBustime('KMB', 'F1A22B170518051B', '603', 3, '','1');
+        getBustime('KMB', 'F1A22B170518051B', '603', 3, '','2');
         getBustime('KMB', 'CCBCD7F613287BC8', '601', 3, '','1');
-        getBustime('CTB', '001213', '601P', 4);
-        getBustime('CTB', '001213', '601', 4);
+        getBustime('NWFB', '001213', '601P', 4);
+        getBustime('NWFB', '001213', '601', 4);
         getBustime('CTB', '001213', '690', 4);
         getBustime('CTB', '001213', '619', 4);
         getBustime('CTB', '001213', '619X', 4);
         getBustime('KMB', '913E96996F3B7E3A', '601P', 4, '','1');
         getBustime('KMB', '913E96996F3B7E3A', '601', 4, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '690', 4, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '619', 4, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '619X', 4, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '603', 4, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '690', 4, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619', 4, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619X', 4, '','1');
+        getBustime('KMB', '84C5EBC00642536A', '603', 4, '','1');
+        getBustime('KMB', '84C5EBC00642536A', '603', 4, '','2');
         getBustime('CTB', '002552', '8X', 5);
         getBustime('CTB', '002552', '19', 5);
         getBustime('CTB', '001283', '8X', 6);
         getBustime('CTB', '001283', '19', 6);
         getBustime('CTB', '001283', '678', 7);
         getBustime('KMB', 'DA2677E4FF848D7C', '678', 7,'','1');
-
         
 
 		function getMTRData(sta){
@@ -403,7 +409,7 @@
             document.getElementById(elementidarr[elementid]).innerHTML = outputstr;
         }
 
-        /*
+        
         var x = document.getElementById("demo");
         function getLocation() {
             if (navigator.geolocation) {
@@ -418,13 +424,9 @@
             "<br>Longitude: " + position.coords.longitude;
         }
 
-        */
+        
     </script>
-	<div class="header" style="display: none;">
-    <p><button id="button" onclick="getLocation()">Test</button></p>
-    <p>width = <span id="demo"></span></p>
-    <a href="test.html">Go to page 2</a>
-    </div>
+	
 </body>
 </head>
 </html>
