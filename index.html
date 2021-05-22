@@ -125,9 +125,9 @@
         </table>
         <table>
             <tr>
-                <td style="33%;"><span class="heading">康城往將隧</span></td>
-                <td style="33%;"></td>
-                <td style="33%;"></td>
+                <td style="width: 33%;"><span class="heading">康城往將隧</span></td>
+                <td style="width: 33%;"></td>
+                <td style="width: 33%;"></td>
             </tr>
             <tr>
                 <td><span id="LOHAStoTKOtunnel">Test</span></td>
@@ -166,15 +166,17 @@
     <div id="WanChaiCWB" style="width: 100%;border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
             <tr>
-                <td style="min-width:50%"><span class="heading">灣仔消防局</span></td>
+                <td style="width: 0%; display: none"><span class="heading">灣仔消防局</span></td>
                 <td style="min-width:50%"><span class="heading">維多利亞公園</span></td>
+                <td style="min-width:50%"><span class="heading">銀幕街</span></td>
             </tr>
             <tr>
-                <td colspan="2" align="center" style="background-color: lightgoldenrodyellow;"><span style="font-size: 1em; font-weight: bold;"> 603要喺東隧口落</span></td>
+                <td colspan="3" align="center" style="background-color: lightgoldenrodyellow;"><span style="font-size: 1em; font-weight: bold;"> 603要喺東隧口落</span></td>
             </tr>
             <tr>
-                <td style="min-width:50%"><span id="WanChaiFireStationtoTKO">Test</span></td>
-                <td style="min-width:50%"><span id="VictoriaParktoTKO">Test</span></td>
+                <td style="width: 0%;display: none"><span id="WanChaiFireStationtoTKO">Test</span></td>
+                <td style="min-width:50%; vertical-align: top;"><span id="VictoriaParktoTKO">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="TinHautoTKO">Test</span></td>
             </tr>
         </table>
     </div>
@@ -195,8 +197,9 @@
                             'VictoriaParktoTKO',
                             'HKSHtoCWB',
                             'FortressHilltoHKSH',
-                            'FortressHilltoTWEH'];
-        var elementarr = [[],[],[],[],[],[],[],[]];
+                            'FortressHilltoTWEH',
+                            'TinHautoTKO'];
+        var elementarr = [[],[],[],[],[],[],[],[],[]];
 
         
         getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
@@ -205,6 +208,9 @@
         getBustime('NWFB','002928', '797', 1, 'O');
         getBustime('KMB', '5BEC0CCDD7EE4A8C', '690', 2, '','1');
         getBustime('CTB', '003589', '690', 2);
+
+        
+        /* WanChaiFireStationtoTKO
         getBustime('NWFB', '002437', '601P', 3);
         getBustime('CTB', '002437', '690', 3);
         getBustime('CTB', '002437', '619', 3);
@@ -216,6 +222,8 @@
         getBustime('KMB', 'A07CC0A6D462A579', '619X', 3, '','1');
         getBustime('KMB', 'F1A22B170518051B', '603', 3, '','1');
         getBustime('KMB', 'CCBCD7F613287BC8', '601', 3, '','1');
+        */
+
         getBustime('NWFB', '001213', '601P', 4);
         getBustime('NWFB', '001213', '601', 4);
         getBustime('CTB', '001213', '690', 4);
@@ -233,6 +241,17 @@
         getBustime('CTB', '001283', '19', 6);
         getBustime('CTB', '001283', '678', 7);
         getBustime('KMB', 'DA2677E4FF848D7C', '678', 7,'','1');
+        getBustime('NWFB', '001259', '601P', 8);
+        getBustime('CTB', '001259', '690', 8);
+        getBustime('CTB', '001259', '619', 8);
+        getBustime('CTB', '001259', '619X', 8);
+        getBustime('NWFB', '001259', '601', 8);
+        getBustime('KMB', '328C9939240A94CA', '601P', 8, '','1');
+        getBustime('KMB', '1A0BCDF4BDC3E1A9', '690', 8, '','1');
+        getBustime('KMB', '1A0BCDF4BDC3E1A9', '619', 8, '','1');
+        getBustime('KMB', '1A0BCDF4BDC3E1A9', '619X', 8, '','1');
+        getBustime('KMB', '328C9939240A94CA', '601', 8, '','1');
+
         getLocation();
 
 		function getMTRData(sta){
