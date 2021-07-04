@@ -111,6 +111,10 @@
     </div>
     <div id="prioritybox"  style="border: solid; border-width: 2.5px; display: none"></div>
     <div class="spaceholder"></div>
+    <div id="prioritybox2"  style="border: solid; border-width: 2.5px; display: none"></div>
+    <div class="spaceholder"></div>
+    <div id="prioritybox3"  style="border: solid; border-width: 2.5px; display: none"></div>
+    <div class="spaceholder"></div>
     <div style="border: solid; border-width: 2.5px" id="fromLOHAS">
         <table style="min-width: 100%;">
             <tr>
@@ -137,17 +141,15 @@
         </table>
     </div>
     <div class="spaceholder"></div>
-    <div id="toLOHAS" style="border: solid; border-width: 2.5px">
+    <div id="toLOHASMTR" style="border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
             <tr>
-                <td style="min-width:33%"><span class="heading">北角站</span><span class="material-icons">&#xe56f</span></td>
-                <td style="min-width:33%"><span class="heading">將軍澳站</span><span class="material-icons">&#xe56f</span></td>
-                <td style="min-width:33%; border-left: solid; border-width: 1px;"><span class="heading">將隧往康城</span></td>
+                <td style="min-width:50%"><span class="heading">北角站</span><span class="material-icons">&#xe56f</span></td>
+                <td style="min-width:50%"><span class="heading">將軍澳站</span><span class="material-icons">&#xe56f</span></td>
             </tr>
             <tr>
                 <td style="vertical-align: top"><span id="fromNP">time from NP</span></td>
-                <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>
-                <td style="min-width:33%; border-left: solid; border-width: 1px;vertical-align: top"><span id="TKOtunneltoLOHAS">Test</span></td>
+                <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>   
             </tr>
         </table>
     </div>
@@ -158,25 +160,28 @@
                 <td><span class="heading">HKSH</span></td>
             </tr>
             <tr>
-                <td><span id="HKSHtoCWB">Test</span></td>
+                <td style="min-width:50%"><span id="HKSHtoCWB">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="HKSHtoOthers">Test</span></td>
             </tr>
         </table>
     </div>    
     <div class="spaceholder"></div>
-    <div id="WanChaiCWB" style="width: 100%;border: solid; border-width: 2.5px">
+    <div id="toLOHASbus" style="width: 100%;border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
             <tr>
                 <td style="width: 0%; display: none"><span class="heading">灣仔消防局</span></td>
                 <td style="min-width:50%"><span class="heading">維多利亞公園</span></td>
-                <td style="min-width:50%"><span class="heading">銀幕街</span></td>
+                <td style="width: 0%; display: none"><span class="heading">銀幕街</span></td>
+                <td style="min-width:50%;"><span class="heading">將隧往康城</span></td>
             </tr>
             <tr>
-                <td colspan="3" align="center" style="background-color: lightgoldenrodyellow;"><span style="font-size: 1em; font-weight: bold;"> 603要喺東隧口落</span></td>
+                <td align="center" style="background-color: lightgoldenrodyellow;"><span style="font-size: 1em; font-weight: bold;"> 603要喺東隧口落</span></td>
             </tr>
             <tr>
                 <td style="width: 0%;display: none"><span id="WanChaiFireStationtoTKO">Test</span></td>
                 <td style="min-width:50%; vertical-align: top;"><span id="VictoriaParktoTKO">Test</span></td>
-                <td style="min-width:50%; vertical-align: top"><span id="TinHautoTKO">Test</span></td>
+                <td style="width: 0%; display: none"><span id="TinHautoTKO">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="TKOtunneltoLOHAS">Test</span><br><span class="heading">東隧往將隧</span><span id="EHCtoTKO">Test</span></td>
             </tr>
         </table>
     </div>
@@ -198,8 +203,10 @@
                             'HKSHtoCWB',
                             'FortressHilltoHKSH',
                             'FortressHilltoTWEH',
-                            'TinHautoTKO'];
-        var elementarr = [[],[],[],[],[],[],[],[],[]];
+                            'TinHautoTKO',
+                            'EHCtoTKO',
+                            'HKSHtoOthers'];
+        var elementarr = [[],[],[],[],[],[],[],[],[],[],[]];
 
         
         getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
@@ -241,6 +248,8 @@
         getBustime('CTB', '001283', '19', 6);
         getBustime('CTB', '001283', '678', 7);
         getBustime('KMB', 'DA2677E4FF848D7C', '678', 7,'','1');
+
+        /*TinHautoTKO
         getBustime('NWFB', '001259', '601P', 8);
         getBustime('CTB', '001259', '690', 8);
         getBustime('CTB', '001259', '619', 8);
@@ -251,6 +260,16 @@
         getBustime('KMB', '1A0BCDF4BDC3E1A9', '619', 8, '','1');
         getBustime('KMB', '1A0BCDF4BDC3E1A9', '619X', 8, '','1');
         getBustime('KMB', '328C9939240A94CA', '601', 8, '','1');
+        */
+
+        getBustime('CTB', '001464', '690', 9);
+        getBustime('NWFB', '001464', '694', 9);
+        getBustime('CTB', '001464', '619X', 9)
+        getBustime('KMB', '991E47DBD416B908', '690', 9, '','1');
+        getBustime('KMB', 'D678B3364437D16B', '619X', 9, '','1');
+        getBustime('CTB', '002552', '1', 10);
+        getBustime('CTB', '002552', '117', 10);
+        getBustime('KMB', '0B17DA299C307855', '117', 10, '','1');
 
         getLocation();
 
@@ -447,13 +466,22 @@
             } else if ((lat >= 22.267764899999236) && (lat <= 22.271100907486268) && (longi >= 114.18121319767681) && (longi <= 114.18583732584327)) {
                 // in HKSH
                 document.getElementById("prioritybox").innerHTML = document.getElementById("HKSH").innerHTML;
+                document.getElementById("prioritybox2").innerHTML = document.getElementById("toLOHASbus").innerHTML;
+                document.getElementById("prioritybox3").innerHTML = document.getElementById("toLOHASMTR").innerHTML;
                 document.getElementById("HKSH").style.display = 'none';
+                document.getElementById("toLOHASbus").style.display = 'none';
+                document.getElementById("toLOHASMTR").style.display = 'none';
                 document.getElementById("prioritybox").style.display = 'block';
+                document.getElementById("prioritybox2").style.display = 'block';
+                document.getElementById("prioritybox3").style.display = 'block';
             } else if ((lat >= 22.275742041795617) && (lat <= 22.283183716396373) && (longi >= 114.17240484677927) && (longi <= 114.18926810351255)) {
                 // in Wan Chai / CWB
-                document.getElementById("prioritybox").innerHTML = document.getElementById("WanChaiCWB").innerHTML;
-                document.getElementById("WanChaiCWB").style.display = 'none';
+                document.getElementById("prioritybox").innerHTML = document.getElementById("toLOHASbus").innerHTML;
+                document.getElementById("prioritybox2").innerHTML = document.getElementById("toLOHASMTR").innerHTML;
+                document.getElementById("toLOHASbus").style.display = 'none';
+                document.getElementById("toLOHASMTR").style.display = 'none';
                 document.getElementById("prioritybox").style.display = 'block';
+                document.getElementById("prioritybox2").style.display = 'block';
             } 
         }
 
