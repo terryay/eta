@@ -1,5 +1,9 @@
 <html>
     <head>
+
+    </head>
+    <body>
+        <div id="reader" width="600px"></div>
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
         
         <script language="JavaScript">
@@ -19,13 +23,8 @@
             { fps: 10, qrbox: {width: 250, height: 250} },
             /* verbose= */ false);
 
-            function start(){
-                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-            };
+
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         </script>
-    </head>
-    <body>
-        <div id="reader" width="600px"></div>
-        <button onclick="start();">Test</button>
     </body>
 </html>
