@@ -19,10 +19,13 @@
             { fps: 10, qrbox: {width: 250, height: 250} },
             /* verbose= */ false);
 
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            function start(){
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            };
         </script>
     </head>
     <body>
         <div id="reader"></div>
+        <button onclick="start();"
     </body>
 </html>
