@@ -4,9 +4,13 @@
     </head>
     <body>
         <div id="reader" width="600px"></div>
+        <div id="result"></div>
+        <div id="detext"></div>
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
         
         <script language="JavaScript">
+            /*
+            
             function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
@@ -21,10 +25,25 @@
             let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader",
             { fps: 10, qrbox: {width: 250, height: 250} },
-            /* verbose= */ false);
+            // verbose= // false);
 
 
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+            */
+
+            const html5QrCode = new Html5Qrcode("reader");
+            const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                document.getElementById("result").innerHTML = decodedResult;
+                document.getElementById("detext").innerHTML = decodedText;
+            };
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+            // If you want to prefer front camera
+            html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
+
+
+
         </script>
     </body>
 </html>
