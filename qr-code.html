@@ -1,9 +1,9 @@
 <html>
     <head>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <button style="height: 40;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>'
+        <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>'
         <div id="reader" width="600px"></div>
         <div id="result"></div>
         <div id="detext"></div>
@@ -37,6 +37,11 @@
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                 document.getElementById("result").innerHTML = decodedResult;
                 document.getElementById("detext").innerHTML = decodedText;
+                html5QrCode.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                }).catch((err) => {
+                // Stop failed, handle it.
+                });
             };
             const config = { fps: 10, qrbox: { width: 500, height: 500 } };
 
