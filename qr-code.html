@@ -8,12 +8,16 @@
             <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>
             <button style="height: 40px;" onclick='stopScan();'>Stop</button>
         </p>
-        <label>
-            Barcode: <input type="text" id="detext">
-        </label>
-        <label>
-            Expiry Date: <input type="date" id="expdate">
-        </label>
+        <p>
+            <label>
+                Barcode: <input type="text" id="detext">
+            </label>
+        </p>
+        <p>
+            <label>
+                Expiry Date: <input type="date" id="expdate">
+            </label>
+        </p>
         <table id="resulttable">
             <tr><th>Barcode</th><th>Expiry Date</th></tr>
         </table>
