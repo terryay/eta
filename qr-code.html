@@ -3,10 +3,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>'
-        <div id="reader" width="600px"></div>
-        <div id="result"></div>
-        <div id="detext"></div>
+        <div id="reader" width="500px"></div>
+        <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>
+        <p>
+            Barcode: <input type="text" id="detext">
+        </p>
+        <p>
+            Expiry Date: <input type="date" id="expdate">
+        </p>
+        <table id="resulttable">
+            <tr><th>Barcode</th><th>Expiry Date</th></tr>
+        </table>
+        <button onclick='scannext();' style="height: 40px;">Next</button>
+
         <script src="html5-qrcode.min.js" type="text/javascript"></script>
         
         <script language="JavaScript">
@@ -35,17 +44,21 @@
 
             const html5QrCode = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                document.getElementById("result").innerHTML = decodedResult;
-                document.getElementById("detext").innerHTML = decodedText;
+                document.getElementById("detext").value = decodedText;
                 html5QrCode.stop().then((ignore) => {
                 // QR Code scanning is stopped.
                 }).catch((err) => {
                 // Stop failed, handle it.
                 });
             };
-            const config = { fps: 10, qrbox: { width: 500, height: 500 } };
+            const config = { fps: 10, qrbox: { width: 300, height: 300 } };
 
-            // If you want to prefer front camera
+            function scannext(){
+                document.getElementById("resulttable").innerHTML += ("<tr><td>" + document.getElementById("detext").value + "</td><td>" + document.getElementById("expdate").value);
+                document.getElementById("detext").value = "";
+                document.getElementById("expdate").value = "";
+                html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+            };
             
 
 
