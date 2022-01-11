@@ -4,13 +4,16 @@
     </head>
     <body>
         <div id="reader" width="500px"></div>
-        <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>
         <p>
+            <button style="height: 40px;" onclick='html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);'>Start</button>
+            <button style="height: 40px;" onclick='stopScan();'>Stop</button>
+        </p>
+        <label>
             Barcode: <input type="text" id="detext">
-        </p>
-        <p>
+        </label>
+        <label>
             Expiry Date: <input type="date" id="expdate">
-        </p>
+        </label>
         <table id="resulttable">
             <tr><th>Barcode</th><th>Expiry Date</th></tr>
         </table>
@@ -58,6 +61,14 @@
                 document.getElementById("detext").value = "";
                 document.getElementById("expdate").value = "";
                 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+            };
+
+            function stopScan(){
+                html5QrCode.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                }).catch((err) => {
+                // Stop failed, handle it.
+                });
             };
             
 
