@@ -56,7 +56,7 @@
             
             function testStorage(){
                 localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value));
-                document.getElementById("link").href = ("mailto:test@example.com&" + encodeURIcomponent("subject=Test subject&content=" + localStorage.getItem("data")));
+                document.getElementById("link").innerText = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&content=" + localStorage.getItem("data")));
             }
 
             
