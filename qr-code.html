@@ -19,7 +19,7 @@
             </label>
         </p>
         <button onclick='scannext();' style="height: 40px;">Next</button>
-        <a href='encodeURIcomponent("mailto:test@example.com&subject=Test subject&content=" + localStorage.getItem("data"))'>Send email</a>
+        <a id="link" href="">Send email</a>
         <table id="resulttable">
             <tr><th>Barcode</th><th>Expiry Date</th></tr>
         </table>
@@ -56,6 +56,7 @@
             
             function testStorage(){
                 localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value));
+                document.getElementById("link").href = encodeURIcomponent("mailto:test@example.com&subject=Test subject&content=" + localStorage.getItem("data"));
             }
 
             
