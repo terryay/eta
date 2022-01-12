@@ -10,7 +10,7 @@
         </p>
         <p>
             <label>
-                Barcode: <div id="detext"></div>
+                Barcode: <input id="detext" type="text">
             </label>
         </p>
         <p>
@@ -29,7 +29,7 @@
         <script language="JavaScript">
             const html5QrCode = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                document.getElementById("detext").innerText = decodedText;
+                document.getElementById("detext").value = decodedText;
                 html5QrCode.stop().then((ignore) => {
                 // QR Code scanning is stopped.
                 }).catch((err) => {
@@ -57,6 +57,7 @@
             function testStorage(){
                 localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value) + "\n");
                 document.getElementById("link").href = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&body=" + localStorage.getItem("data")));
+                document.getElementById("test").innerText = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&body=" + localStorage.getItem("data")));
             }
 
             
