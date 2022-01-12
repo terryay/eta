@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" sizes="192x192" href="car-brake-parking.png">
+    <script src="https://cdn.rawgit.com/mholt/PapaParse/2f1eb8c4/papaparse.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGctHir2mhoJ9EJkLZ4yNjWuJD1n5RqhY&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+          height: 400px;
+          width: 400px;
+        }
+  
+        /* Optional: Makes the sample page fill the window. 
+        html,
+        body {
+          height: 400px;
+          width: 400px;
+          margin: 0;
+          padding: 0;
+        }
+
+        */
+      </style>
+</head>
+<body>
+    
+    <script>
+     function initMap() {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 17,
+            center: { lat: (Number(urlSearchParams.get("centrelat"))-0.00015), lng: (Number(urlSearchParams.get("centrelon"))) },
+            mapId: "1578dfe71df0e789"
+        });
+    
+        
+        
+        let svgMarker;
+        const svgMarkerBlue = {
+                path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                fillColor: "blue",
+                fillOpacity: 0.6,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 1.5,
+                anchor: new google.maps.Point(15, 30),
+            };
+        const svgMarkerBrown = {
+                path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                fillColor: "brown",
+                fillOpacity: 0.6,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 1.5,
+                anchor: new google.maps.Point(15, 30),
+            };
+        const svgMarkerYellow = {
+                path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                fillColor: "darkorange",
+                fillOpacity: 0.6,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 1.5,
+                anchor: new google.maps.Point(15, 30),
+            };
+        const svgMarkerGrey = {
+            path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+            fillColor: "grey",
+            fillOpacity: 0.6,
+            strokeWeight: 0,
+            rotation: 0,
+            scale: 1.5,
+            anchor: new google.maps.Point(15, 30),
+        };
+        for (let p of urlSearchParams) {
+            if ((p[0] != "centrelat") && (p[0] != "centrelon")) {             
+                let aa = p[0].split("-");
+                if (Number(aa[0]) == 30) {
+                svgMarker = svgMarkerYellow
+                } else if (Number(aa[0]) == 60) {
+                svgMarker = svgMarkerBrown
+                } else if(Number(aa[0]) == 120) {
+                svgMarker = svgMarkerBlue
+                } else if((aa[0]) == "00") {
+                svgMarker = svgMarkerGrey
+                };
+                new google.maps.Marker({
+                position: { lat: (Number(aa[1])-0.00015), lng: Number(p[1]) },
+                map: map,
+                icon: svgMarker,
+                });
+            } else {
+                
+            }
+        }
+    }   
+    </script>
+    <div id="map"></div>
+    
+</body>

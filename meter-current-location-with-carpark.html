@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" sizes="192x192" href="car-brake-parking.png">
+    <script src="https://cdn.rawgit.com/mholt/PapaParse/2f1eb8c4/papaparse.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+   
+</head>
+<body onload="getLocation()">
+    <script lang="JavaScript">
+        var allcarpark = new Map();
+        var carparktocheck = [];
+    
+        function getOccupancyData(MeterData, lat, lon){
+            let aaa = Papa.parse("https://resource.data.one.gov.hk/td/psiparkingspaces/occupancystatus/occupancystatus.csv", {
+                download: true,
+                delimiter: ",",
+                header: true,
+                complete: function(results) {
+                    
+
+                    let urlstr = ("centrelat=" + lat + "&centrelon=" + lon + "&");
+                    let i = 0;
+                    let found;
+                    
+
+
+                    for (let y of MeterData) {
+                        if (((Number(lat)-0.005) <= y[17]) && ((Number(lat)+0.005) >= y[17]) && ((Number(lon)-0.005) <= y[18]) && ((Number(lon)+0.005) >= y[18])) {
+                            found = false;
+                            for (let x of results.data) {
+                                if (x.ParkingSpaceId == y[1]) {
+                                    found = true;
+                                    if (x.OccupancyStatus == "V") {
+                                        urlstr += (y[20] + "-" + y[17] + "=" + y[18] + "&")
+                                    }
+                                    break;
+                                }
+                            }
+                            if (found == false) {
+                                urlstr += ("00-" + y[17] + "=" + y[18] + "&")
+                            }
+                        }
+                    }
+
+
+                        
+                        
+                    
+                   urlstr = ("metermap-current-location.html?" + urlstr)
+                   document.getElementById("mapframe").src = urlstr;
+                }
+            })
+        };
+
+        function getMeterData(lat, lon){
+            let urlstr = "";
+            let aaa = Papa.parse("https://resource.data.one.gov.hk/td/psiparkingspaces/spaceinfo/parkingspaces.csv", {
+                download: true,
+                delimiter: ",",
+                header: false,
+                complete: function(results) {
+                    getOccupancyData(results.data, lat, lon)
+                   
+                }
+            })
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            let lat = position.coords.latitude;
+            let longi = position.coords.longitude;
+            
+            getMeterData(lat, longi)
+        }
+
+        function showError(error) {
+            x = document.getElementById("errmsgbox");
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                x.innerHTML = "User denied the request for Geolocation."
+                break;
+                case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+                case error.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+                case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
+            }
+        }
+
+        function getcarpark(lat,lon){
+            let reqstring;
+            let request = new XMLHttpRequest();
+    
+
+            let i;
+
+            reqstring = 'https://resource.data.one.gov.hk/td/carpark/basic_info_all.json';
+           
+            
+            request.open('GET', reqstring);
+            request.responseType = 'json';
+            request.onload = function() {    
+                var rawdata = request.response;
+                var objvar;
+
+                objvar = rawdata['car_park'];
+                for (i = 0; i < (objvar.length); i++){
+                    allcarpark.set(objvar[i]['park_id'], objvar[i]['name_tc']);
+                    if (((objvar[i]['latitude']-0.01) <= Number(lat)) && ((objvar[i]['latitude']+0.01) >= Number(lat)) && ((objvar[i]['longitude']-0.01) <= Number(lon)) && ((objvar[i]['longitude']+0.01) >= Number(lon))) {
+                        carparktocheck.push(objvar[i]['park_id']);
+                    }
+                    
+                }
+
+                
+                if (carparktocheck.length >= 1) {
+                    getvacancy(0);
+                }
+                
+            };
+            request.send();
+
+        }
+
+        function getvacancy(count){
+            let request1 = new XMLHttpRequest();
+            let reqstring1;
+
+            reqstring1 = 'https://resource.data.one.gov.hk/td/carpark/vacancy_' + carparktocheck[count] + '.json';
+            request1.open('GET', reqstring1);
+            request1.responseType = 'json';
+            request1.onload = function() {    
+                const rawdata1 = request1.response;
+                let outputstr = ""
+
+                objvar1 = rawdata1['car_park'][0]['vehicle_type'];
+                for (j = 0; j < (objvar1.length); j++){
+                    if (objvar1[j]['type'] == 'P'){ 
+
+                        outputstr = "<tr><td>" + allcarpark.get(rawdata1['car_park'][0]['park_id']) + "</td><td>"
+                        for (h = 0; h < objvar1[j]['service_category'].length; h++) {
+                            if (objvar1[j]['service_category'][h]['category'] != "HOURLY") {
+                                outputstr += objvar1[j]['service_category'][h]['category'] + ": ";
+                            } else {
+                                outputstr += ": ";
+                            };
+                            
+                            if (objvar1[j]['service_category'][h]['vacancy_type'] == 'B') {
+                                if (objvar1[j]['service_category'][h]['vacancy'] == 1) {
+                                    outputstr += "有位<br>";
+                                } else {
+                                    outputstr += objvar1[j]['service_category'][h]['vacancy'] + "<br>";
+                                }
+                            } else {
+                                outputstr += objvar1[j]['service_category'][h]['vacancy'] + "<br>";
+                            }                            
+                        }
+
+                        
+                    }
+                }
+                
+                outputstr += "</td></tr>"
+                document.getElementById("carparktable").innerHTML += outputstr;
+                if ((count + 1) < carparktocheck.length) {
+                    getvacancy(count+1)
+                }
+            }
+
+            request1.send();
+        }
+        
+    </script>
+   
+   
+    <iframe id="mapframe" src="" height="500" width="500" title="Iframe Example" style="border: none"></iframe>
+    <div id="errmsgbox"></div>
+    <table id="carparktable"></table>
+    <div><button onclick="location.reload()" style="height: 30px">Reload</button></div>
+    <div>
+        <input type="text" id="inputlat" value="22.27859811">
+        <input type="text" id="inputlong" value="114.18479255">
+        <button onclick="getMeterData(document.getElementById('inputlat').value, document.getElementById('inputlong').value);getcarpark(document.getElementById('inputlat').value, document.getElementById('inputlong').value)" style="height: 30px">Submit</button>
+    </div>
+</body>
