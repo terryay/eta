@@ -58,8 +58,8 @@
             
             function testStorage(){
                 localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value) + "\n");
-                document.getElementById("link").href = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&body=" + localStorage.getItem("data")));
-                document.getElementById("test").innerText = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&body=" + localStorage.getItem("data")));
+                document.getElementById("link").href = ("mailto:test@example.com&subject=Subject&body=" + encodeURIComponent(localStorage.getItem("data")));
+                document.getElementById("test").innerText = ("mailto:test@example.com&subject=Subject&body=" + encodeURIComponent(localStorage.getItem("data")));
             }
 
             
