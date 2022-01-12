@@ -55,8 +55,8 @@
             };
             
             function testStorage(){
-                localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value));
-                document.getElementById("link").href = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&content=" + localStorage.getItem("data")));
+                localStorage.setItem("data",(localStorage.getItem("data") + document.getElementById("detext").value + "," + document.getElementById("expdate").value) + "\n");
+                document.getElementById("link").href = ("mailto:test@example.com&" + encodeURIComponent("subject=Test subject&body=" + localStorage.getItem("data")));
             }
 
             
