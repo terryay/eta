@@ -1,11 +1,11 @@
-<html>
+﻿<html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="shortcut icon" sizes="192x192" href="bus-clock.png">
-    <link rel="icon" sizes="192x192" href="bus-clock.png">
+    <link rel="shortcut icon" sizes="192x192" href="currency-gbp.png">
+    <link rel="icon" sizes="192x192" href="currency-gbp.png">
     <title>Currency</title>
 </head>
 <style>
@@ -21,14 +21,14 @@
     }
 
     .heading {
-	    font-size: 1.2em;
+	    font-size: 0.8em;
         margin-bottom: 0;
         margin-top: 0;
     }
 
     td {
         text-align: center;
-        font-size: 1.2em;
+        font-size: 0.8em;
         border-width: 1px;
         border-style: solid;
     }
@@ -36,7 +36,7 @@
 <body onload="getWLB();">
     
     <div style="border: solid; border-width: 2.5px">
-        <table style="min-width: 500px;">
+        <table style="min-width: 100%;">
             <tr>
                 <td align="center"><span class="heading">Currency</span></td>
                 <td align="center"><span class="heading">On Hand</span></td>
@@ -130,13 +130,13 @@
                     }
                 };
                 document.getElementById("AUDbuy").innerText = AUDbuy.toFixed(4);
-                document.getElementById("AUDsell").innerHTML = AUDsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((AUDsell - AUDonhand)/AUDonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("AUDsell").innerHTML = AUDsell.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((AUDsell - AUDonhand)/AUDonhand*100).toFixed(2) + "%)</span>";
                 document.getElementById("JPYbuy").innerText = JPYbuy.toFixed(5);
-                document.getElementById("JPYsell").innerHTML = JPYsell.toFixed(5) + "  <span style='font-size: 0.9em'>(" + ((JPYsell - JPYonhand)/JPYonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("JPYsell").innerHTML = JPYsell.toFixed(5) + "  <span style='font-size: 0.6em'>(" + ((JPYsell - JPYonhand)/JPYonhand*100).toFixed(2) + "%)</span>";
                 document.getElementById("GBPbuy").innerText = GBPbuy.toFixed(4);
-                document.getElementById("GBPsell").innerHTML = GBPsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((GBPsell - GBPonhand)/GBPonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("GBPsell").innerHTML = GBPsell.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((GBPsell - GBPonhand)/GBPonhand*100).toFixed(2) + "%)</span>";
                 document.getElementById("EURbuy").innerText = EURbuy.toFixed(4);
-                document.getElementById("EURsell").innerHTML = EURsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((EURsell - EURonhand)/EURonhand*100).toFixed(2) + "%)</span>";;
+                document.getElementById("EURsell").innerHTML = EURsell.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((EURsell - EURonhand)/EURonhand*100).toFixed(2) + "%)</span>";;
 
                 if (AUDsell >= AUDonhand) {
                     document.getElementById("AUDsell").style.color = "blue";
