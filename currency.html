@@ -1,0 +1,171 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" sizes="192x192" href="bus-clock.png">
+    <link rel="icon" sizes="192x192" href="bus-clock.png">
+    <title>Currency</title>
+</head>
+<style>
+    table {
+        word-break: keep-all;
+        border-collapse: collapse;
+        box-sizing: border-box;
+        font-family: 'Arial' , '微軟正黑體';
+        padding-bottom: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .heading {
+	    font-size: 1.2em;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    td {
+        text-align: center;
+        font-size: 1.2em;
+        border-width: 1px;
+        border-style: solid;
+    }
+</style>
+<body onload="getWLB();">
+    
+    <div style="border: solid; border-width: 2.5px">
+        <table style="min-width: 500px;">
+            <tr>
+                <td align="center"><span class="heading">Currency</span></td>
+                <td align="center"><span class="heading">On Hand</span></td>
+                <td align="center"><span class="heading">+10%</span></td>
+                <td align="center"><span class="heading">Sell</span></td>
+                <td align="center"><span class="heading">Buy</span></td>
+            </tr>
+            <tr>
+                <td>AUD</td>
+                <td><span id="AUDonhand"></span></td>
+                <td><span id="AUD10"></span></td>
+                <td><span id="AUDsell"></span></td>
+                <td><span id="AUDbuy"></span></td>
+            </tr>
+            <tr>
+                <td>JPY</td>
+                <td><span id="JPYonhand"></span></td>
+                <td><span id="JPY10"></span></td>
+                <td><span id="JPYsell"></span></td>
+                <td><span id="JPYbuy"></span></td>
+            </tr>
+            <tr>
+                <td>EUR</td>
+                <td><span id="EURonhand"></span></td>
+                <td><span id="EUR10"></span></td>
+                <td><span id="EURsell"></span></td>
+                <td><span id="EURbuy"></span></td>
+            </tr>
+            <tr>
+                <td>GBP</td>
+                <td><span id="GBPonhand"></span></td>
+                <td><span id="GBP10"></span></td>
+                <td><span id="GBPsell"></span></td>
+                <td><span id="GBPbuy"></span></td>
+            </tr>
+        </table>
+    </div>
+    <div id="WLBlastupdate"></div>
+
+    <script language="JavaScript">
+        var GBPonhand = 10.21158336;
+        var EURonhand = 8.482785418;
+        var JPYonhand = 0.06334364257;
+        var AUDonhand = 5.614034493;
+
+        document.getElementById("GBPonhand").innerText = GBPonhand.toFixed(4);
+        document.getElementById("GBP10").innerText = (GBPonhand * 1.1).toFixed(4);
+        document.getElementById("AUDonhand").innerText = AUDonhand.toFixed(4);
+        document.getElementById("AUD10").innerText = (AUDonhand * 1.1).toFixed(4);
+        document.getElementById("JPYonhand").innerText = JPYonhand.toFixed(4);
+        document.getElementById("JPY10").innerText = (JPYonhand * 1.1).toFixed(4);
+        document.getElementById("EURonhand").innerText = EURonhand.toFixed(4);
+        document.getElementById("EUR10").innerText = (EURonhand * 1.1).toFixed(4);
+
+
+        function getWLB(){
+            let request = new XMLHttpRequest();
+            let doc = document.implementation.createHTMLDocument();
+            let currencyobjarray = [];
+            let i = -1;
+            let AUDbuy, AUDsell,GBPbuy,GBPsell,JPYbuy,JPYsell,EURbuy,EURsell;
+            //let tre = new HTMLTableElement();
+            //tre.rows.ch
+            request.onload = function() {
+                doc.documentElement.innerHTML = request.responseText;
+                tre = doc.documentElement.getElementsByTagName("table")[0];
+                divc = doc.documentElement.getElementsByTagName("div");
+                for (let y in divc) {
+                    pos = divc[y].innerText.indexOf("更新時間:");
+                    //console.log(pos);
+                    if (pos > -1) {
+                        document.getElementById("WLBlastupdate").innerText = divc[y].innerText.substring(pos+5,pos+25);
+                        break;
+                    }
+                }
+                for (let x in tre.rows) {
+                    if (typeof tre.rows[x] == "object") {
+                        if (tre.rows[x].cells[0].innerText.trim() == "澳元") {
+                            AUDbuy = Number(tre.rows[x].cells[1].innerText.trim());
+                            AUDsell = Number(tre.rows[x].cells[2].innerText.trim());                        
+                        } else if (tre.rows[x].cells[0].innerText.trim() == "日元") {
+                            JPYbuy = Number(tre.rows[x].cells[1].innerText.trim());
+                            JPYsell = Number(tre.rows[x].cells[2].innerText.trim());                        
+                        } else if (tre.rows[x].cells[0].innerText.trim() == "英鎊") {
+                            GBPbuy = Number(tre.rows[x].cells[1].innerText.trim());
+                            GBPsell = Number(tre.rows[x].cells[2].innerText.trim());                        
+                        } else if (tre.rows[x].cells[0].innerText.trim() == "歐元") {
+                            EURbuy = Number(tre.rows[x].cells[1].innerText.trim());
+                            EURsell = Number(tre.rows[x].cells[2].innerText.trim());                        
+                        }
+                    }
+                };
+                document.getElementById("AUDbuy").innerText = AUDbuy.toFixed(4);
+                document.getElementById("AUDsell").innerHTML = AUDsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((AUDsell - AUDonhand)/AUDonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("JPYbuy").innerText = JPYbuy.toFixed(5);
+                document.getElementById("JPYsell").innerHTML = JPYsell.toFixed(5) + "  <span style='font-size: 0.9em'>(" + ((JPYsell - JPYonhand)/JPYonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("GBPbuy").innerText = GBPbuy.toFixed(4);
+                document.getElementById("GBPsell").innerHTML = GBPsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((GBPsell - GBPonhand)/GBPonhand*100).toFixed(2) + "%)</span>";
+                document.getElementById("EURbuy").innerText = EURbuy.toFixed(4);
+                document.getElementById("EURsell").innerHTML = EURsell.toFixed(4) + "  <span style='font-size: 0.9em'>(" + ((EURsell - EURonhand)/EURonhand*100).toFixed(2) + "%)</span>";;
+
+                if (AUDsell >= AUDonhand) {
+                    document.getElementById("AUDsell").style.color = "blue";
+                };
+                if (AUDsell >= (AUDonhand * 1.05)) {
+                    document.getElementById("AUDsell").style.color = "red";
+                };
+                if (EURsell >= EURonhand) {
+                    document.getElementById("EURsell").style.color = "blue";
+                };
+                if (EURsell >= (EURonhand * 1.05)) {
+                    document.getElementById("EURsell").style.color = "red";
+                };
+                if (GBPsell >= GBPonhand) {
+                    document.getElementById("GBPsell").style.color = "blue";
+                };
+                if (GBPsell >= (GBPonhand * 1.05)) {
+                    document.getElementById("GBPsell").style.color = "red";
+                };
+                if (JPYsell >= JPYonhand) {
+                    document.getElementById("JPYsell").style.color = "blue";
+                };
+                if (JPYsell >= (JPYonhand * 1.05)) {
+                    document.getElementById("JPYsell").style.color = "red";
+                };
+            }
+            request.open('GET', 'https://www.cmbwinglungbank.com/ibanking/CnCoFiiTtrateDsp.jsp');
+            request.send();
+        };
+    </script>
+</body>
+</html>
