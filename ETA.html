@@ -186,6 +186,16 @@
                 <td style="min-width:50%; vertical-align: top"><span id="TKOtunneltoLOHAS">Test</span><br><span class="heading">東隧往將隧</span><span id="EHCtoTKO">Test</span></td>
             </tr>
         </table>
+        <table style="min-width: 100%;">
+            <tr>
+                <td style="min-width:50%"><span class="heading">中環</span></td>
+                <td style="min-width:50%;"><span class="heading">金鐘</span></td>
+            </tr>
+            <tr>
+                <td style="min-width:50%; vertical-align: top;"><span id="Central">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="Admiralty">Test</span></td>
+            </tr>
+        </table>
     </div>
 
 
@@ -207,8 +217,10 @@
                             'FortressHilltoTWEH',
                             'TinHautoTKO',
                             'EHCtoTKO',
-                            'HKSHtoOthers'];
-        var elementarr = [[],[],[],[],[],[],[],[],[],[],[]];
+                            'HKSHtoOthers',
+                            'Central',
+                            'Admiralty'];
+        var elementarr = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
         
         getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
@@ -275,6 +287,34 @@
         getBustime('KMB', '0B17DA299C307855', '117', 10, '','1');
 		getBustime('NWFB', '002552', '1M', 10);
 
+        getBustime('NWFB', '002736', '641', 11);
+        getBustime('NWFB', '001047', '601P', 11);
+        getBustime('CTB', '001047', '690', 11);
+        getBustime('CTB', '001047', '619', 11);
+        getBustime('CTB', '001047', '619X', 11);
+        /*getBustime('KMB', '913E96996F3B7E3A', '601P', 11, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '601', 11, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '690', 11, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619', 11, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619X', 11, '','1');
+        getBustime('KMB', '84C5EBC00642536A', '603', 11, '','1'); */
+        getBustime('NWFB', '001032', '2', 11);
+        getBustime('CTB', '001049', '10', 11);
+        getBustime('NWFB', '001049', '18', 11);
+
+        getBustime('NWFB', '001137', '601P', 12);
+        getBustime('CTB', '001137', '690', 12);
+        getBustime('CTB', '001137', '619', 12);
+        getBustime('CTB', '001137', '619X', 12);
+        /*getBustime('KMB', '913E96996F3B7E3A', '601P', 12, '','1');
+        getBustime('KMB', '913E96996F3B7E3A', '601', 12, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '690', 12, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619', 12, '','1');
+        getBustime('KMB', '9541036143D6CCF1', '619X', 12, '','1');
+        getBustime('KMB', '84C5EBC00642536A', '603', 12, '','1'); */
+        getBustime('NWFB', '001136', '2', 12);
+        getBustime('CTB', '001136', '10', 12);
+        getBustime('NWFB', '001136', '23', 12);
 
         getLocation();
 
