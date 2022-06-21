@@ -107,7 +107,7 @@
     }
 
 </style>
-<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TKO');">
+<body onload="getMTRData('LHP');getMTRData('NOP');getMTRData('TIK');">
     <div class="header" id="warning-message">
         abc
     </div>
@@ -147,11 +147,11 @@
         <table style="min-width: 100%;">
             <tr>
                 <td style="min-width:50%"><span class="heading">北角站</span><span class="material-icons">&#xe56f</span></td>
-                <td style="min-width:50%"><span class="heading">將軍澳站</span><span class="material-icons">&#xe56f</span></td>
+                <td style="min-width:50%"><span class="heading">調景嶺站</span><span class="material-icons">&#xe56f</span></td>
             </tr>
             <tr>
                 <td style="vertical-align: top"><span id="fromNP">time from NP</span></td>
-                <td style="vertical-align: top"><span id="fromTKO">time from TKO</span></td>   
+                <td style="vertical-align: top"><span id="fromTIK">time from TKO</span></td>   
             </tr>
         </table>
     </div>
@@ -295,14 +295,14 @@
             request.responseType = 'json';
             request.onload = function() {
                 const rawdata = request.response;
-
+                console.log(rawdata);
                 if (rawdata['status'] == 1){
                     if (sta == 'LHP') {
                         objvar = rawdata['data']['TKL-LHP']['DOWN'];
                     } else if (sta == 'NOP') {
                         objvar = rawdata['data']['TKL-NOP']['UP'];
-                    } else if (sta == 'TKO') {
-                        objvar = rawdata['data']['TKL-TKO']['UP'];
+                    } else if (sta == 'TIK') {
+                        objvar = rawdata['data']['TKL-TIK']['UP'];
                     }
 
 
@@ -310,6 +310,7 @@
                         timestr = objvar[i]['time']
                         timestr = timestr.substr(11,5)
                         dest = objvar[i]['dest']
+                        s1 = '';
                         switch (dest) {
                             case 'NOP':
                                 deststring = '北角';
@@ -328,6 +329,7 @@
                                 break;
                             case 'LHP':
                                 deststring = '康城';
+                                s1 = ' style="color: MediumBlue; font-weight: bold"';
                                 break;
                             case 'HAH':
                                 deststring = '坑口';
@@ -336,9 +338,9 @@
                                 deststring = '寶琳';
                         }
                                     
-                        if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
-                            s = s + '<tr><td style="vertical-align: top"><span class="time">' + timestr + '   ' + '</span></td><td><span class="dest">' + deststring + '</span></td></tr>';
-                        }
+                        //if (((sta == 'TKO') && (dest == 'LHP')) || (sta != 'TKO')) {
+                            s = s + '<tr><td style="vertical-align: top"><span class="time"' + s1 + '>' + timestr + '   ' + '</span></td><td><span class="dest"' + s1 + '>' + deststring + '</span></td></tr>';
+                        //}
 
                         
                     }
@@ -348,8 +350,8 @@
                         document.getElementById('nexttraintime').innerHTML = s;
                     } else if (sta == 'NOP') {
                         document.getElementById('fromNP').innerHTML = s;
-                    } else if (sta == 'TKO') {
-                        document.getElementById('fromTKO').innerHTML = s;
+                    } else if (sta == 'TIK') {
+                        document.getElementById('fromTIK').innerHTML = s;
                     };
                     document.getElementById('warning-message').style.display='none';
                 } else {
