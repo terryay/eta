@@ -239,8 +239,8 @@
 			document.getElementById("GBPsell").innerText = GBPsell.toFixed(4);
 			document.getElementById("EURbuy").innerHTML = EURbuy.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((EURbuy - EURonhand)/EURonhand*100).toFixed(2) + "%)</span>";
 			document.getElementById("EURsell").innerText = EURsell.toFixed(4);
-			document.getElementById("BTCbuy").innerHTML = BTCbuy.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((BTCbuy - BTConhand)/BTConhand*100).toFixed(2) + "%)</span>";
-			document.getElementById("BTCsell").innerText = BTCsell.toFixed(4);
+			document.getElementById("BTCbuy").innerHTML = BTCbuy.toFixed(0) + "  <span style='font-size: 0.6em'>(" + ((BTCbuy - BTConhand)/BTConhand*100).toFixed(2) + "%)</span>";
+			document.getElementById("BTCsell").innerText = BTCsell.toFixed(0);
 
 			if (AUDbuy >= AUDonhand) {
 				document.getElementById("AUDbuy").style.color = "green";
