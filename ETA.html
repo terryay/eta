@@ -192,8 +192,12 @@
                 <td style="min-width:50%;"><span class="heading">金鐘</span></td>
             </tr>
             <tr>
-                <td style="min-width:50%; vertical-align: top;"><span id="Central">Test</span></td>
-                <td style="min-width:50%; vertical-align: top"><span id="Admiralty">Test</span></td>
+                <td style="min-width:50%; vertical-align: top;"><span id="CentraltoTKO">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="AdmiraltytoTKO">Test</span></td>
+            </tr>
+			<tr>
+				<td style="min-width:50%; vertical-align: top;"><span id="CentraltoNP">Test</span></td>
+                <td style="min-width:50%; vertical-align: top"><span id="AdmiraltytoNP">Test</span></td>
             </tr>
         </table>
     </div>
@@ -218,9 +222,11 @@
                             'TinHautoTKO',
                             'EHCtoTKO',
                             'HKSHtoOthers',
-                            'Central',
-                            'Admiralty'];
-        var elementarr = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
+                            'CentraltoTKO',
+                            'AdmiraltytoTKO',
+							'CentraltoNP',
+							'AdmiraltytoNP'];
+        var elementarr = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
         
         getBustime('KMB','97D1981DE7ECBCE7','98',0,'','1');
@@ -292,29 +298,34 @@
         getBustime('CTB', '001047', '690', 11);
         getBustime('CTB', '001047', '619', 11);
         getBustime('CTB', '001047', '619X', 11);
-        /*getBustime('KMB', '913E96996F3B7E3A', '601P', 11, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '601', 11, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '690', 11, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '619', 11, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '619X', 11, '','1');
-        getBustime('KMB', '84C5EBC00642536A', '603', 11, '','1'); */
-        getBustime('NWFB', '001032', '2', 11);
-        getBustime('CTB', '001049', '10', 11);
-        getBustime('NWFB', '001049', '18', 11);
+        getBustime('KMB', 'D7D5360A9A0C5D6A', '601P', 11, '','1');
+        getBustime('KMB', '5298A15B8CCAEF42', '690', 11, '','1');
+        getBustime('KMB', '5298A15B8CCAEF42', '619', 11, '','1');
+        getBustime('KMB', '5298A15B8CCAEF42', '619X', 11, '','1');
+        getBustime('KMB', '46CB01C7F12428A3', '603', 11, '','1'); 
+		getBustime('KMB', '205CE4DA030061F9', '641', 11, '','1');
+
 
         getBustime('NWFB', '001137', '601P', 12);
         getBustime('CTB', '001137', '690', 12);
         getBustime('CTB', '001137', '619', 12);
         getBustime('CTB', '001137', '619X', 12);
-        /*getBustime('KMB', '913E96996F3B7E3A', '601P', 12, '','1');
-        getBustime('KMB', '913E96996F3B7E3A', '601', 12, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '690', 12, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '619', 12, '','1');
-        getBustime('KMB', '9541036143D6CCF1', '619X', 12, '','1');
-        getBustime('KMB', '84C5EBC00642536A', '603', 12, '','1'); */
-        getBustime('NWFB', '001136', '2', 12);
-        getBustime('CTB', '001136', '10', 12);
-        getBustime('NWFB', '001136', '23', 12);
+        getBustime('KMB', 'B7EE8C907E1E50C0', '601P', 12, '','1');
+        getBustime('KMB', 'E30B8672A91A50B9', '601', 12, '','1');
+        getBustime('KMB', '3007D34FB91FB27E', '690', 12, '','1');
+        getBustime('KMB', '3007D34FB91FB27E', '619', 12, '','1');
+        getBustime('KMB', '3007D34FB91FB27E', '619X', 12, '','1');
+        getBustime('KMB', '3FCC00D1D01ACD28', '603', 12, '','1');
+        
+		
+		getBustime('NWFB', '001032', '2', 13);
+        getBustime('CTB', '001049', '10', 13);
+        getBustime('NWFB', '001049', '18', 13);
+		
+		
+		getBustime('NWFB', '001136', '2', 14);
+        getBustime('CTB', '001136', '10', 14);
+        getBustime('NWFB', '001136', '23', 14);
 
         getLocation();
 

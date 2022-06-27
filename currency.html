@@ -37,7 +37,7 @@
         border-style: solid;
     }
 </style>
-<body onload="getWLB();getHangSeng();">
+<body onload="getWLB();getHangSeng();getAlphaVantage();">
     
     <div style="border: solid; border-width: 2.5px">
         <table style="min-width: 100%;">
@@ -76,6 +76,13 @@
                 <td><span id="GBPbuy"></span></td>
                 <td><span id="GBPsell"></span></td>
             </tr>
+			<tr>
+                <td>Bitcoin</td>
+                <td><span id="BTConhand"></span></td>
+                <td><span id="BTC10"></span></td>
+                <td><span id="BTCbuy"></span></td>
+                <td><span id="BTCsell"></span></td>
+            </tr>
         </table>
     </div>
     <p>WLB Last Update:<span id="WLBlastupdate"></span></p>
@@ -86,6 +93,7 @@
         var EURonhand = 8.482785418;
         var JPYonhand = 0.0617451583;
         var AUDonhand = 5.614034493;
+		var BTConhand = 240531.8542;
     	var APIkey = 'N3SYKLZ4BIWNA52D';
 		var GBPbuy = 0;
 		var GBPsell = 0;
@@ -95,9 +103,12 @@
 		var JPYsell = 0;
 		var EURbuy = 0;
 		var EURsell = 0;
+		var BTCsell = 0;
+		var BTCbuy = 0;
 		
 		var WLBaddress = 'https://www.cmbwinglungbank.com/ibanking/CnCoFiiTtrateDsp.jsp';
 		var HangSengaddress = 'https://rbwm-api.hsbc.com.hk/pws-hk-hase-rates-papi-prod-proxy/v1/fxtt-exchange-rates';
+		var alphavantageaddress = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=HKD&apikey=' + APIkey;
 
 
   
@@ -194,6 +205,20 @@
         };
 		
 		
+		function getAlphaVantage(){
+			let request = new XMLHttpRequest();
+			request.open('GET', alphavantageaddress);
+            request.responseType = 'json';
+            request.onload = function() {
+				const rawdata = request.response;
+				BTCbuy = Number(rawdata["Realtime Currency Exchange Rate"]["8. Bid Price"]);
+				BTCsell = Number(rawdata["Realtime Currency Exchange Rate"]["9. Ask Price"]);
+				UpdateElements();
+				}
+			request.send();
+		}
+		
+		
 		function UpdateElements(){
 			document.getElementById("GBPonhand").innerText = GBPonhand.toFixed(4);
 			document.getElementById("GBP10").innerText = (GBPonhand * 1.1).toFixed(4);
@@ -203,6 +228,8 @@
 			document.getElementById("JPY10").innerText = (JPYonhand * 1.1).toFixed(4);
 			document.getElementById("EURonhand").innerText = EURonhand.toFixed(4);
 			document.getElementById("EUR10").innerText = (EURonhand * 1.1).toFixed(4);
+			document.getElementById("BTConhand").innerText = BTConhand.toFixed(4);
+			document.getElementById("BTC10").innerText = (BTConhand * 1.1).toFixed(4);
 		
 			document.getElementById("AUDbuy").innerHTML = AUDbuy.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((AUDbuy - AUDonhand)/AUDonhand*100).toFixed(2) + "%)</span>";
 			document.getElementById("AUDsell").innerText = AUDsell.toFixed(4);
@@ -212,6 +239,8 @@
 			document.getElementById("GBPsell").innerText = GBPsell.toFixed(4);
 			document.getElementById("EURbuy").innerHTML = EURbuy.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((EURbuy - EURonhand)/EURonhand*100).toFixed(2) + "%)</span>";
 			document.getElementById("EURsell").innerText = EURsell.toFixed(4);
+			document.getElementById("BTCbuy").innerHTML = BTCbuy.toFixed(4) + "  <span style='font-size: 0.6em'>(" + ((BTCbuy - BTConhand)/BTConhand*100).toFixed(2) + "%)</span>";
+			document.getElementById("BTCsell").innerText = BTCsell.toFixed(4);
 
 			if (AUDbuy >= AUDonhand) {
 				document.getElementById("AUDbuy").style.color = "green";
@@ -236,6 +265,12 @@
 			};
 			if (JPYbuy >= (JPYonhand * 1.05)) {
 				document.getElementById("JPYbuy").style.color = "darkgreen";
+			};
+			if (BTCbuy >= BTConhand) {
+				document.getElementById("BTCbuy").style.color = "green";
+			};
+			if (BTCbuy >= (BTConhand * 1.05)) {
+				document.getElementById("BTCbuy").style.color = "darkgreen";
 			};
 		};
     </script>
