@@ -11,7 +11,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <title>Parking</title>
 </head>
-<body onload="getMeterData(22.2686378, 114.1852396);getcarpark(22.2686378, 114.1852396)">
+<body onload="getMeterData(22.2686378, 114.1852396);">
     <script lang="JavaScript">
         var allcarpark = new Map();
         var carparktocheck = [];
@@ -93,40 +93,7 @@
             }
         }
 
-        function getcarpark(lat,lon){
-            let reqstring;
-            let request = new XMLHttpRequest();
-    
-
-            let i;
-
-            reqstring = 'https://resource.data.one.gov.hk/td/carpark/basic_info_all.json';
-           
-            
-            request.open('GET', reqstring);
-            request.responseType = 'json';
-            request.onload = function() {    
-                var rawdata = request.response;
-                var objvar;
-
-                objvar = rawdata['car_park'];
-                for (i = 0; i < (objvar.length); i++){
-                    allcarpark.set(objvar[i]['park_id'], objvar[i]['name_tc']);
-                    if (((objvar[i]['latitude']-0.01) <= Number(lat)) && ((objvar[i]['latitude']+0.01) >= Number(lat)) && ((objvar[i]['longitude']-0.01) <= Number(lon)) && ((objvar[i]['longitude']+0.01) >= Number(lon))) {
-                        carparktocheck.push(objvar[i]['park_id']);
-                    }
-                    
-                }
-
-                
-                if (carparktocheck.length >= 1) {
-                    getvacancy(0);
-                }
-                
-            };
-            request.send();
-
-        }
+        
 
         function getvacancy(count){
             let request1 = new XMLHttpRequest();
@@ -181,6 +148,5 @@
    
     <iframe id="mapframe" src="" height="500" width="500" title="Iframe Example" style="border: none"></iframe>
     <div id="errmsgbox"></div>
-    <table id="carparktable"></table>
     <div><button onclick="location.reload()" style="height: 40px">Reload</button></div>
 </body>
